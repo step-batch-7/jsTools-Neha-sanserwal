@@ -88,7 +88,7 @@ tail : badFile.txt : no such file
     
     name => parseUserOption
 
-====================================== Up to Flow 3 =========================================
+====================================== Up to Flow 5 =========================================
 
 The following will be covered in this flow 
 CASE :  tail goodFile.txt
@@ -129,16 +129,45 @@ expected Output =>
 
     name => generateErrorMessage
 
+[2] Output => text: fileOption
+        {content:"",count:5}
+    Input =>fileOption
+        {fileName: "goodFile.txt",count:5}
+    name => loadFileContents
 
-[2.] Output => fn(): loadFileContents(tailOptions) or generateErrorMessage(errorContent)
-     Input => object : tailOptions
+[3a.] Output => fn(): loadFileContents(tailOptions) or generateErrorMessage(errorContent)
+     Input => object : fileTailOptions
         {fileName:goodFile.txt, count : 5}
                 or
         {fileName:badFile.txt, count : 5}
     
-    name : handleTailOperation
+    name : handleFileTailOperation
 
-[3.] Output => text: tailOptions
+[3b.]  Output => object : stdinTailOption or errorMessage 
+        {content : 'randomLines',count:5}
+                or
+        {content: "randomLines"}
+                or
+        {type:"",message:''}
+    Input =>stdinTailOption
+        {count: 5} or {}
+    name : handleStdinTailOperation
+
+[4.]  Output => fn(): handleStdinTailOperation(object) or handleFileTailOperation(object)
+        {fileName:goodFile.txt, count : 5}
+                or
+        {fileName:badFile.txt, count : 5}
+                or 
+        {count:5}
+    Input => tailOptions
+        {fileName:goodFile.txt, count : 5}
+                or
+        {fileName:badFile.txt, count : 5}
+                or 
+        {count:5}
+    name => pickAction
+
+[5.] Output => text: tailOptions
         {fileName:goodFile.txt, count : 5}
                 or
         {fileName:badFile.txt, count : 5}
@@ -150,7 +179,7 @@ expected Output =>
 
     name => parseTailOptions
 
-[4.] Output => array of string : userOption
+[6.] Output => array of string : userOption
         ["badFile.txt", "-n", 5]
                 or 
         ["goodFile.txt","-n", 5]
