@@ -1,0 +1,75 @@
+--planed---
+1. tail goodFile.txt => 
+    will give the last ten lines of the file or
+    will give the total line if file has lines less than ten.
+
+--planed--
+2. tail badFile.txt =>
+    will give the error -> tail: badFile : no such file.
+
+--planed--
+3. tail goodFile.txt -n 5 =>
+    will give the last five lines of the file or
+    will give all the lines if file has less than five lines.
+    will give error if file does not exist.
+
+--planed--
+4. tail =>
+    will list the last 10 lines of output of cat
+
+--planed--
+6. tail -n 5
+    will list last five lines from stdin
+    will list total lines from stdin if the total lines are less than 5
+    will give error if the number is illegal
+
+===================================== plan on Hold =========================================
+7. tail goodFile1.txt goodFile2.txt =>
+    will list the last ten lines of files as follows
+    ==> goodFile1.txt <==
+        some content
+    ==> goodFile2.txt <==
+        some content
+
+    will not list the file if it does not exist
+    ==> goodFile1.txt <==
+        some content
+    tail:goodFile2 : no such file
+
+8. tail -n 2 goodFile1.txt goodFile2.txt =>
+    will list last 2 lines of each file
+     ==> goodFile1.txt <==
+        some content
+     ==> goodFile2.txt <==
+        some content
+    
+    will not list if file is faulty or does not exist
+     ==> goodFile1.txt <==
+        some content
+    tail:goodFile2 : no such file
+
+
+
+9. cat goodFile1.txt goodFile2.txt | tail
+    will list the last 10 lines of each files
+        ==> goodFile1.txt <==
+            some content
+        ==> goodFile2.txt <==
+            some content
+    will list total lines of file if lines are less than 10
+        ==> goodFile1.txt <==
+            some content
+        ==> goodFile2.txt <==
+            some content
+
+10. cat goodFile1.txt goodFile2.txt | tail -n 5
+    will list the last 5 lines of each files
+        ==> goodFile1.txt <==
+            some content
+        ==> goodFile2.txt <==
+            some content
+    will list total lines of file if lines are less than 5
+        ==> goodFile1.txt <==
+            some content
+        ==> goodFile2.txt <==
+            some content

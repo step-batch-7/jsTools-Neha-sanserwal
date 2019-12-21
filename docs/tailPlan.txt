@@ -1,0 +1,164 @@
+goodFile.txt =>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+
+================================ Up to Flow 1 and Flow 2 ========================================
+
+The following will be covered in this flow 
+CASE :  tail goodFile.txt
+    expectation: 
+    will give the last ten lines of the file or
+    will give the total line if file has lines less than ten.
+    will give error if file does not exist.
+
+cmd : node tail.js  goodFile.js or node tail.js badFile.txt
+expected output =>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+ or 
+tail : badFile.txt : no such file 
+
+[1a.] Output => text: tailLines
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+        8
+        9
+        10
+
+    Input => text: fileName
+        goodFile.txt
+
+    name => generateTailLines
+{Note: this task will handle the case of file having lines less than 10}
+
+[1b.] Output => text: errorMessage
+        tail: badFile.txt: no such file
+    
+    Input => text: fileName
+        badFile.txt
+
+    name => generateErrorMessage
+
+
+[2.] Output => fn(): loadFileContents or generateErrorMessage
+        goodFile.txt / badFile.txt
+    
+     Input => text: fileName
+        goodFile.txt or badFile.txt 
+    
+    name : handleTailOperation
+
+[3.] Output => text: fileName
+        goodFile.txt
+
+    Input => array of string : userOption
+        ['goodFile.txt'] or ['badFile.txt']
+
+    name => getFileName
+
+[4.] Output => array of string : userOption
+        ['goodFile.txt']
+
+    Input => array of string :cmdArgs
+        ["node","tail.js","goodFile.txt"]
+                or
+        ["node","tail.js","badFile.txt"]
+    
+    name => parseUserOption
+
+====================================== Up to Flow 3 =========================================
+
+The following will be covered in this flow 
+CASE :  tail goodFile.txt
+    expectation: 
+     will give the last five lines of the file or
+     will give all the lines if file has less than five lines.
+     will give error if file does not exist.
+
+cmd : node tail.js -n 5 goodFile.js or node tail.js -n 5 badFile.txt
+
+expected Output =>
+    1
+    2
+    3
+    4
+    5
+  or 
+    tail : badFile.txt : no such file 
+
+
+[1a.] Output => text: tailLines
+        1
+        2
+        3
+        4
+        5
+
+     Input => object: tailOptions
+        {fileName:goodFile.txt, count : 5}
+    name => generateTailLines
+{Note: this task will handle the case of file having lines less than 10}
+
+[1b.] Output => text: errorMessage
+        tail: badFile.txt: no such file
+    
+     Input => object: errorContent
+        {type:"tail",message:"no such file",fileName:'badFile'}
+
+    name => generateErrorMessage
+
+
+[2.] Output => fn(): loadFileContents(tailOptions) or generateErrorMessage(errorContent)
+     Input => object : tailOptions
+        {fileName:goodFile.txt, count : 5}
+                or
+        {fileName:badFile.txt, count : 5}
+    
+    name : handleTailOperation
+
+[3.] Output => text: tailOptions
+        {fileName:goodFile.txt, count : 5}
+                or
+        {fileName:badFile.txt, count : 5}
+
+    Input => array of string : userOption
+        ["badFile.txt", "-n", 5]
+                or 
+        ["goodFile.txt","-n", 5]
+
+    name => parseTailOptions
+
+[4.] Output => array of string : userOption
+        ["badFile.txt", "-n", 5]
+                or 
+        ["goodFile.txt","-n", 5]
+
+    Input => array of string :cmdArgs
+        ["node","tail.js","goodFile.txt","-n", 5]
+                or
+        ["node","tail.js","badFile.txt", "-n", 5]
+    
+    name => filterUserOption
+
