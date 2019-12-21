@@ -1,0 +1,1 @@
+./runAppTests.sh appTest/*.test

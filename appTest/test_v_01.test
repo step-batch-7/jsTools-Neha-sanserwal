@@ -1,5 +1,4 @@
-(node tail.js goodFile.txt)
-1
+(tail ./appTest/goodFile.txt);
 2
 3
 4
@@ -9,3 +8,4 @@
 8
 9
 10
+11
