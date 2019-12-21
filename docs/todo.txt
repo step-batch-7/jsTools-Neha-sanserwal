@@ -1,0 +1,13 @@
+=====todo for version 0.1====
+
+cmd : tail goodFile.txt
+
+--done-- 1.app tests for the following commands
+             tail goodFile.txt  
+--done-- 2. create test folder
+                create file
+--done-- 3. create tail.js
+--**--4. generateTailLines
+5. loadFile Content
+6. filter option 
+7. parse option

@@ -1,3 +1,12 @@
+--expectations--
+1. tail goodFile.txt
+2. tail badFile.txt 
+3. tail goodFile.txt -n 5 
+4. tail
+5. tail -n 5
+6. tail goodFile1.txt goodFile2.txt
+7. tail -n 2 goodFile1.txt goodFile2.txt 
+
 --planed---
 1. tail goodFile.txt => 
     will give the last ten lines of the file or
@@ -47,29 +56,3 @@
      ==> goodFile1.txt <==
         some content
     tail:goodFile2 : no such file
-
-
-
-8. cat goodFile1.txt goodFile2.txt | tail
-    will list the last 10 lines of each files
-        ==> goodFile1.txt <==
-            some content
-        ==> goodFile2.txt <==
-            some content
-    will list total lines of file if lines are less than 10
-        ==> goodFile1.txt <==
-            some content
-        ==> goodFile2.txt <==
-            some content
-
-9. cat goodFile1.txt goodFile2.txt | tail -n 5
-    will list the last 5 lines of each files
-        ==> goodFile1.txt <==
-            some content
-        ==> goodFile2.txt <==
-            some content
-    will list total lines of file if lines are less than 5
-        ==> goodFile1.txt <==
-            some content
-        ==> goodFile2.txt <==
-            some content
