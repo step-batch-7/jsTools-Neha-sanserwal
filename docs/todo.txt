@@ -6,8 +6,8 @@ cmd : tail goodFile.txt
              tail goodFile.txt  
 --done-- 2. create test folder
                 create file
---done-- 3. create tail.js
+--done-- 3. create lib.js
 --done-- 4. generateTailLines
---***--  5. loadFile Content
-6. filter option 
+--done--  5. loadFile Content
+--**--6. filter option 
 7. parse option
