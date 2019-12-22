@@ -1,4 +1,4 @@
-const fs = require("fs");
+const { fsModule } = require("./config");
 const generateTailLines = function(fileContent) {
 	let lines = fileContent.data.split("\n");
 	let slicedLines = lines.reverse().slice(0, 10);
@@ -6,7 +6,7 @@ const generateTailLines = function(fileContent) {
 };
 
 const loadFileContent = function(tailOption) {
-	data = fs.readFileSync(tailOption.filePath, "utf8");
+	data = fsModule.readFile(tailOption.filePath, fsModule.encoding);
 	return { data };
 };
 const parseTailOption = function(userOption) {
