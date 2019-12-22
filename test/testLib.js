@@ -22,11 +22,19 @@ describe("generateTailLines", function() {
 });
 
 describe("loadFileContent", function() {
-	let data = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11";
-	let fileContent = { data };
-	let tailOptions = { filePath: "sample.txt" };
 	it("should load file content", function() {
-		assert.deepStrictEqual(loadFileContent(tailOptions), fileContent);
+		let data = "1\n2\n3";
+		let fileContent = { data };
+		let tailOptions = { filePath: "sample.txt" };
+		const reader = function(path) {
+			assert.deepStrictEqual(path, "sample.txt");
+			return "1\n2\n3";
+		};
+		const encoding = "utf8";
+		assert.deepStrictEqual(
+			loadFileContent(tailOptions, reader, encoding),
+			fileContent
+		);
 	});
 });
 
