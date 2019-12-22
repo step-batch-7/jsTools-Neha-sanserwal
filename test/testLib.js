@@ -3,7 +3,8 @@ const {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption
+	parseTailOption,
+	generateErrorMessage
 } = require("../src/lib");
 
 describe("generateTailLines", function() {
@@ -20,7 +21,18 @@ describe("generateTailLines", function() {
 		assert.strictEqual(generateTailLines(fileContent), expected);
 	});
 });
-
+describe("generateErrorMessage", function() {
+	it("should generate error message for given type", function() {
+		const errorMessage = {
+			type: "badFile.txt",
+			message: "no such file or directory"
+		};
+		assert.strictEqual(
+			generateErrorMessage(errorMessage),
+			"tail: badFile.txt: no such file or directory"
+		);
+	});
+});
 describe("loadFileContent", function() {
 	it("should load file content", function() {
 		let data = "1\n2\n3";

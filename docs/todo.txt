@@ -11,4 +11,12 @@ cmd : tail goodFile.txt
 --done-- 5. loadFile Content
 --done-- 6. filter option 
 --done-- 7. parse option
---**-- 8. create main file wire function in main file
+--done-- 8. create main file wire function in main file
+
+====== todo for version 0.2 ======
+cmd: node tail.js badFile.txt
+ --done--  appTest for following command
+ --done--  generate Error message 
+    wire Functions
+ --done-- . handle file existing 
+   give error if file not present

@@ -4,6 +4,9 @@ const generateTailLines = function(fileContent) {
 	return slicedLines.reverse().join("\n");
 };
 
+const generateErrorMessage = function(errMessage) {
+	return `tail: ${errMessage.type}: ${errMessage.message}`;
+};
 const loadFileContent = function(tailOption, reader, encoding) {
 	data = reader(tailOption.filePath, encoding);
 	return { data };
@@ -21,5 +24,6 @@ module.exports = {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption
+	parseTailOption,
+	generateErrorMessage
 };
