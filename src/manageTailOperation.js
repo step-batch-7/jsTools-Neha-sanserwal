@@ -15,7 +15,7 @@ const manageTailOperation = function(cmdArgs, fsModules) {
 			message: "no such file or directory"
 		};
 
-		throw new Error(generateErrorMessage(errMsg).trim()).message;
+		return new Error(generateErrorMessage(errMsg)).message;
 	}
 	let fileContent = loadFileContent(
 		tailOption,

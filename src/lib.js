@@ -16,7 +16,7 @@ const loadFileContent = function(tailOption, reader, encoding) {
 
 const parseTailOption = function(userOption) {
 	if (userOption[0] === "-n") {
-		count = parseInt(userOption[1]);
+		count = Math.abs(userOption[1]);
 		filePath = userOption[2];
 		return { filePath, count };
 	}

@@ -62,11 +62,13 @@ describe("parseTailOption", function() {
 	it("should do move array of user Option to Object with Valid key if only file is given", function() {
 		let userOption = ["sample.txt"];
 		let tailOption = { filePath: "sample.txt" };
+
 		assert.deepStrictEqual(parseTailOption(userOption), tailOption);
 	});
 	it("should do move array of user Option to Object with Valid key if count is also given", function() {
 		let userOption = ["-n", "5", "sample.txt"];
 		let tailOption = { filePath: "sample.txt", count: 5 };
+		parseTailOption(userOption);
 		assert.deepStrictEqual(parseTailOption(userOption), tailOption);
 	});
 });
