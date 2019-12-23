@@ -28,15 +28,24 @@ describe("generateTailLines", function() {
 	});
 });
 describe("generateErrorMessage", function() {
-	it("should generate error message for given type", function() {
+	it("should generate error message of file type", function() {
 		const errorMessage = {
-			type: "badFile.txt",
-			message: "no such file or directory"
+			type: "file",
+			message: "no such file or directory",
+			filePath: "badFile.txt"
 		};
 		assert.strictEqual(
 			generateErrorMessage(errorMessage),
 			"tail: badFile.txt: no such file or directory"
 		);
+	});
+	it("should generate error message of offset type", function() {
+		const errorMessage = {
+			type: "offset",
+			message: "illegal offset -- a"
+		};
+		let message = `tail: illegal offset -- a`;
+		assert.strictEqual(generateErrorMessage(errorMessage), message);
 	});
 });
 describe("loadFileContent", function() {
@@ -61,7 +70,7 @@ describe("loadFileContent", function() {
 describe("parseTailOption", function() {
 	it("should do move array of user Option to Object with Valid key if only file is given", function() {
 		let userOption = ["sample.txt"];
-		let tailOption = { filePath: "sample.txt" };
+		let tailOption = { filePath: "sample.txt", count: 10 };
 
 		assert.deepStrictEqual(parseTailOption(userOption), tailOption);
 	});

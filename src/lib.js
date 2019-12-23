@@ -4,9 +4,22 @@ const generateTailLines = function(contentAndCount) {
 	let slicedLines = lines.reverse().slice(0, count);
 	return slicedLines.reverse().join("\n");
 };
-
+const generateFileError = function(errMsg) {
+	if (!(errMsg.type === "file")) {
+		return "";
+	}
+	return `tail: ${errMsg.filePath}: ${errMsg.message}`;
+};
+const generateOffsetError = function(errMsg) {
+	if (!(errMsg.type === "offset")) {
+		return "";
+	}
+	return `tail: ${errMsg.message}`;
+};
 const generateErrorMessage = function(errMessage) {
-	return `tail: ${errMessage.type}: ${errMessage.message}`;
+	let err = generateFileError(errMessage);
+	err = err.concat(generateOffsetError(errMessage));
+	return err;
 };
 
 const loadFileContent = function(tailOption, reader, encoding) {
@@ -20,7 +33,7 @@ const parseTailOption = function(userOption) {
 		filePath = userOption[2];
 		return { filePath, count };
 	}
-	return { filePath: userOption[0] };
+	return { filePath: userOption[0], count: 10 };
 };
 
 const filterUserOption = function(cmdArgs) {

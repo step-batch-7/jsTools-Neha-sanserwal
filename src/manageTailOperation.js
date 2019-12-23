@@ -11,7 +11,8 @@ const manageTailOperation = function(cmdArgs, fsModules) {
 	let tailOption = parseTailOption(userOption);
 	if (!fsModules.fileExist(tailOption.filePath)) {
 		const errMsg = {
-			type: tailOption.filePath,
+			type: "file",
+			filePath: tailOption.filePath,
 			message: "no such file or directory"
 		};
 
