@@ -15,8 +15,12 @@ cmd : tail goodFile.txt
 
 ====== todo for version 0.2 ======
 cmd: node tail.js badFile.txt
- --done--  appTest for following command
- --done--  generate Error message 
-    wire Functions
- --done-- . handle file existing 
-   give error if file not present
+ --done-- appTest for following command
+            node tail.js badFile.txt
+ --done-- generate Error message 
+ --done-- wire Functions
+ --done-- handle file existing 
+ --done-- give error if file not present
+
+======= todo for version 0.3 ======
+cmd node tail.js badFile 

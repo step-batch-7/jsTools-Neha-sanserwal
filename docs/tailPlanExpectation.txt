@@ -1,6 +1,6 @@
 --expectations--
-1. tail goodFile.txt
-2. tail badFile.txt 
+--done--1. tail goodFile.txt
+--done--2. tail badFile.txt 
 3. tail goodFile.txt -n 5 
 4. tail
 5. tail -n 5
