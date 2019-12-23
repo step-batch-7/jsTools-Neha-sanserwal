@@ -20,6 +20,12 @@ describe("generateTailLines", function() {
 		let expected = "1\n2\n3\n4\n5";
 		assert.strictEqual(generateTailLines(fileContent), expected);
 	});
+	it("should give last total line of file content if tail count is given", function() {
+		let data = "1\n2\n3\n4\n5";
+		let fileContent = { data, count: 3 };
+		let expected = "3\n4\n5";
+		assert.strictEqual(generateTailLines(fileContent), expected);
+	});
 });
 describe("generateErrorMessage", function() {
 	it("should generate error message for given type", function() {
@@ -35,25 +41,32 @@ describe("generateErrorMessage", function() {
 });
 describe("loadFileContent", function() {
 	it("should load file content", function() {
-		let data = "1\n2\n3";
-		let fileContent = { data };
 		let tailOptions = { filePath: "sample.txt" };
 		const reader = function(path) {
 			assert.deepStrictEqual(path, "sample.txt");
 			return "1\n2\n3";
 		};
+		let expected = {
+			data: "1\n2\n3",
+			filePath: "sample.txt"
+		};
 		const encoding = "utf8";
 		assert.deepStrictEqual(
 			loadFileContent(tailOptions, reader, encoding),
-			fileContent
+			expected
 		);
 	});
 });
 
 describe("parseTailOption", function() {
-	it("should do move array of user Option to Object with Valid key", function() {
+	it("should do move array of user Option to Object with Valid key if only file is given", function() {
 		let userOption = ["sample.txt"];
 		let tailOption = { filePath: "sample.txt" };
+		assert.deepStrictEqual(parseTailOption(userOption), tailOption);
+	});
+	it("should do move array of user Option to Object with Valid key if count is also given", function() {
+		let userOption = ["-n", "5", "sample.txt"];
+		let tailOption = { filePath: "sample.txt", count: 5 };
 		assert.deepStrictEqual(parseTailOption(userOption), tailOption);
 	});
 });

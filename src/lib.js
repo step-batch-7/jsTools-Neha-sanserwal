@@ -1,17 +1,25 @@
-const generateTailLines = function(fileContent) {
-	let lines = fileContent.data.split("\n");
-	let slicedLines = lines.reverse().slice(0, 10);
+const generateTailLines = function(contentAndCount) {
+	let lines = contentAndCount.data.split("\n");
+	let count = contentAndCount.count || 10;
+	let slicedLines = lines.reverse().slice(0, count);
 	return slicedLines.reverse().join("\n");
 };
 
 const generateErrorMessage = function(errMessage) {
 	return `tail: ${errMessage.type}: ${errMessage.message}`;
 };
+
 const loadFileContent = function(tailOption, reader, encoding) {
-	data = reader(tailOption.filePath, encoding);
-	return { data };
+	tailOption.data = reader(tailOption.filePath, encoding);
+	return tailOption;
 };
+
 const parseTailOption = function(userOption) {
+	if (userOption[0] === "-n") {
+		count = parseInt(userOption[1]);
+		filePath = userOption[2];
+		return { filePath, count };
+	}
 	return { filePath: userOption[0] };
 };
 

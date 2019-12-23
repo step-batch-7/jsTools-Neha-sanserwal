@@ -23,4 +23,7 @@ cmd: node tail.js badFile.txt
  --done-- give error if file not present
 
 ======= todo for version 0.3 ======
-cmd node tail.js badFile 
+cmd node tail.js -n -5 goodFile.txt
+--done-- edit generateTailLines
+--done-- edit loadFile
+--done-- edit parseOption (case of -n5 left)
