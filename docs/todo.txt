@@ -28,7 +28,7 @@ cmd node tail.js -n -5 goodFile.txt
 --done-- edit loadFile
 --done-- edit parseOption (case of -n5 left)
 
-cmd node tail.js -n a goodFile.txt
+cmd node tail.js -n wrongOffset goodFile.txt
 
 edit the manageTailOperation
-edit the 
+add function of validation 

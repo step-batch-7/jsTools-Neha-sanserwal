@@ -22,8 +22,8 @@ const generateErrorMessage = function(errMessage) {
 	return err;
 };
 
-const loadFileContent = function(tailOption, reader, encoding) {
-	tailOption.data = reader(tailOption.filePath, encoding);
+const loadFileContent = function(tailOption, reader) {
+	tailOption.data = reader(tailOption.filePath, "utf8");
 	return tailOption;
 };
 

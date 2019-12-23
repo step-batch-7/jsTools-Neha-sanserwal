@@ -4,12 +4,14 @@ const {
 	filterUserOption,
 	parseTailOption,
 	generateErrorMessage
-} = require("./lib");
+} = require("./tailLib");
 
-const manageTailOperation = function(cmdArgs, fsModules, tailOutput) {
+const performTail = function(cmdArgs, fs) {
+	let tailOutput = { err: "", lines: "" };
 	const userOption = filterUserOption(cmdArgs);
 	let tailOption = parseTailOption(userOption);
-	if (!fsModules.fileExist(tailOption.filePath)) {
+
+	if (!fs.existsSync(tailOption.filePath)) {
 		const errMsg = {
 			type: "file",
 			filePath: tailOption.filePath,
@@ -18,15 +20,11 @@ const manageTailOperation = function(cmdArgs, fsModules, tailOutput) {
 		tailOutput.err = new Error(generateErrorMessage(errMsg)).message;
 		return tailOutput;
 	}
-	tailOption = loadFileContent(
-		tailOption,
-		fsModules.readFile,
-		fsModules.encoding
-	);
-	tailOutput.data = generateTailLines(tailOption);
+	tailOption = loadFileContent(tailOption, fs.readFileSync);
+	tailOutput.lines = generateTailLines(tailOption);
 	return tailOutput;
 };
 
 module.exports = {
-	manageTailOperation
+	performTail
 };
