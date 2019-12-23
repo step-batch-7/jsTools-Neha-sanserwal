@@ -27,3 +27,8 @@ cmd node tail.js -n -5 goodFile.txt
 --done-- edit generateTailLines
 --done-- edit loadFile
 --done-- edit parseOption (case of -n5 left)
+
+cmd node tail.js -n a goodFile.txt
+
+edit the manageTailOperation
+edit the 

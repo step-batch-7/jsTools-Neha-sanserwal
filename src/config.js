@@ -4,6 +4,11 @@ const fsModules = {
 	readFile: fs.readFileSync,
 	encoding: "utf8"
 };
+const tailOutput = {
+	data: "",
+	err: ""
+};
 module.exports = {
-	fsModules
+	fsModules,
+	tailOutput
 };

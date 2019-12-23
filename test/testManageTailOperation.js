@@ -9,8 +9,14 @@ describe("manageTailOperation", function() {
 			return false;
 		};
 		let cmdArgs = ["node", "tail.js", "bad"];
-		let expected = "tail: bad: no such file or directory";
-		assert.strictEqual(manageTailOperation(cmdArgs, fsModules), expected);
+		let expected = {
+			err: "tail: bad: no such file or directory",
+			data: ""
+		};
+		assert.deepStrictEqual(
+			manageTailOperation(cmdArgs, fsModules, { err: "", data: "" }),
+			expected
+		);
 	});
 	it("should generate tail lines of given file", function() {
 		const fsModules = {
@@ -27,6 +33,12 @@ describe("manageTailOperation", function() {
 			return "1\n2\n3";
 		};
 		let cmdArgs = ["node", "tail.js", "sample.txt"];
-		assert.strictEqual(manageTailOperation(cmdArgs, fsModules), "1\n2\n3");
+		assert.deepStrictEqual(
+			manageTailOperation(cmdArgs, fsModules, { err: "", data: "" }),
+			{
+				err: "",
+				data: "1\n2\n3"
+			}
+		);
 	});
 });

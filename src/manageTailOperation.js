@@ -6,7 +6,7 @@ const {
 	generateErrorMessage
 } = require("./lib");
 
-const manageTailOperation = function(cmdArgs, fsModules) {
+const manageTailOperation = function(cmdArgs, fsModules, tailOutput) {
 	const userOption = filterUserOption(cmdArgs);
 	let tailOption = parseTailOption(userOption);
 	if (!fsModules.fileExist(tailOption.filePath)) {
@@ -15,15 +15,16 @@ const manageTailOperation = function(cmdArgs, fsModules) {
 			filePath: tailOption.filePath,
 			message: "no such file or directory"
 		};
-
-		return new Error(generateErrorMessage(errMsg)).message;
+		tailOutput.err = new Error(generateErrorMessage(errMsg)).message;
+		return tailOutput;
 	}
-	let fileContent = loadFileContent(
+	tailOption = loadFileContent(
 		tailOption,
 		fsModules.readFile,
 		fsModules.encoding
 	);
-	return generateTailLines(fileContent);
+	tailOutput.data = generateTailLines(tailOption);
+	return tailOutput;
 };
 
 module.exports = {

@@ -1,7 +1,7 @@
 --expectations--
 --done--1. tail goodFile.txt
 --done--2. tail badFile.txt 
-3. tail goodFile.txt -n 5 
+--**-- 3. tail goodFile.txt -n 5 
 4. tail
 5. tail -n 5
 6. tail goodFile1.txt goodFile2.txt
@@ -21,6 +21,7 @@
     will give the last five lines of the file or
     will give all the lines if file has less than five lines.
     will give error if file does not exist.
+    will give error if offset is not valid.
 
 --planed--
 4. tail =>

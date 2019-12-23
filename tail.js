@@ -1,6 +1,8 @@
-const { fsModules } = require("./src/config");
+const { fsModules, tailOutput } = require("./src/config");
 const { manageTailOperation } = require("./src/manageTailOperation");
 const main = function(cmdArgs) {
-	console.log(manageTailOperation(cmdArgs, fsModules));
+	let endResult = manageTailOperation(cmdArgs, fsModules, tailOutput);
+	process.stderr.write(endResult.err);
+	process.stdout.write(endResult.data);
 };
 main(process.argv);
