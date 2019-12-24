@@ -21,5 +21,5 @@ const tail = function(cmdArgs, fs) {
 };
 
 module.exports = {
-	performTail
+	tail
 };
