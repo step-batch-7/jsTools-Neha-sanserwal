@@ -1,5 +1,6 @@
 const assert = require("chai").assert;
 const { performTail } = require("../src/performTail");
+
 describe("performTail", function() {
 	it("should give error if can't find given file", function() {
 		const fs = {};

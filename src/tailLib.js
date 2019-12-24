@@ -10,7 +10,7 @@ const loadFileContent = function(filePath, reader) {
 	return lines;
 };
 
-const parseTailOption = function(userOption) {
+const parseTailOptions = function(userOption) {
 	if (userOption[0] === "-n") {
 		count = Math.abs(userOption[1]);
 		filePath = userOption[2];
@@ -28,5 +28,5 @@ module.exports = {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption
+	parseTailOptions
 };

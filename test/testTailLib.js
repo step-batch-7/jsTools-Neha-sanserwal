@@ -3,7 +3,7 @@ const {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption
+	parseTailOptions
 } = require("../src/tailLib");
 
 describe("generateTailLines", function() {
@@ -43,18 +43,18 @@ describe("loadFileContent", function() {
 	});
 });
 
-describe("parseTailOption", function() {
+describe("parseTailOptions", function() {
 	it("should do move array of user Option to Object with Valid key if only file is given", function() {
 		let userOption = ["sample.txt"];
 		let tailOption = { filePath: "sample.txt", count: 10 };
 
-		assert.deepStrictEqual(parseTailOption(userOption), tailOption);
+		assert.deepStrictEqual(parseTailOptions(userOption), tailOption);
 	});
 	it("should do move array of user Option to Object with Valid key if count is also given", function() {
 		let userOption = ["-n", "5", "sample.txt"];
 		let tailOption = { filePath: "sample.txt", count: 5 };
-		parseTailOption(userOption);
-		assert.deepStrictEqual(parseTailOption(userOption), tailOption);
+		parseTailOptions(userOption);
+		assert.deepStrictEqual(parseTailOptions(userOption), tailOption);
 	});
 });
 

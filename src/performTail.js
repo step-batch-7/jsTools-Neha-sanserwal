@@ -2,25 +2,25 @@ const {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption
+	parseTailOptions
 } = require("./tailLib");
 const { generateErrorMessage } = require("./errorMessages");
 
 const performTail = function(cmdArgs, fs) {
 	let tailOutput = { err: "", lines: [] };
 	const userOption = filterUserOption(cmdArgs);
-	let tailOption = parseTailOption(userOption);
-	if (!fs.existsSync(tailOption.filePath)) {
+	let tailOptions = parseTailOptions(userOption);
+	if (!fs.existsSync(tailOptions.filePath)) {
 		const errMsg = {
 			type: "file",
-			filePath: tailOption.filePath,
+			filePath: tailOptions.filePath,
 			message: "no such file or directory"
 		};
 		tailOutput.err = new Error(generateErrorMessage(errMsg)).message;
 		return tailOutput;
 	}
-	tailOption.lines = loadFileContent(tailOption.filePath, fs.readFileSync);
-	tailOutput.lines = generateTailLines(tailOption);
+	tailOptions.lines = loadFileContent(tailOptions.filePath, fs.readFileSync);
+	tailOutput.lines = generateTailLines(tailOptions);
 	return tailOutput;
 };
 
