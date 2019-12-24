@@ -2,15 +2,14 @@ const {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption,
-	generateErrorMessage
+	parseTailOption
 } = require("./tailLib");
+const { generateErrorMessage } = require("./errorMessages");
 
 const performTail = function(cmdArgs, fs) {
-	let tailOutput = { err: "", lines: "" };
+	let tailOutput = { err: "", lines: [] };
 	const userOption = filterUserOption(cmdArgs);
 	let tailOption = parseTailOption(userOption);
-
 	if (!fs.existsSync(tailOption.filePath)) {
 		const errMsg = {
 			type: "file",
@@ -20,7 +19,7 @@ const performTail = function(cmdArgs, fs) {
 		tailOutput.err = new Error(generateErrorMessage(errMsg)).message;
 		return tailOutput;
 	}
-	tailOption = loadFileContent(tailOption, fs.readFileSync);
+	tailOption.lines = loadFileContent(tailOption.filePath, fs.readFileSync);
 	tailOutput.lines = generateTailLines(tailOption);
 	return tailOutput;
 };

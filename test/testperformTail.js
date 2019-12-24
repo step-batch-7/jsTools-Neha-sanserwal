@@ -10,7 +10,7 @@ describe("performTail", function() {
 		let cmdArgs = ["node", "tail.js", "bad"];
 		let expected = {
 			err: "tail: bad: no such file or directory",
-			lines: ""
+			lines: []
 		};
 		assert.deepStrictEqual(performTail(cmdArgs, fs), expected);
 	});
@@ -28,7 +28,7 @@ describe("performTail", function() {
 		let cmdArgs = ["node", "tail.js", "sample.txt"];
 		let expected = {
 			err: "",
-			lines: "1\n2\n3"
+			lines: ["1", "2", "3"]
 		};
 
 		assert.deepStrictEqual(performTail(cmdArgs, fs), expected);

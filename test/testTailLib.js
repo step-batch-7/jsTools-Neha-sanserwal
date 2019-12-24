@@ -3,51 +3,30 @@ const {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption,
-	generateErrorMessage
+	parseTailOption
 } = require("../src/tailLib");
 
 describe("generateTailLines", function() {
 	it("should give last ten line of file content if lines are more than 10", function() {
-		let data = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11";
-		let fileContent = { data };
-		let expected = "2\n3\n4\n5\n6\n7\n8\n9\n10\n11";
-		assert.strictEqual(generateTailLines(fileContent), expected);
+		let lines = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11";
+		let fileContent = { lines };
+		let expected = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
+		assert.deepStrictEqual(generateTailLines(fileContent), expected);
 	});
 	it("should give last total line of file content if lines are less than 10", function() {
-		let data = "1\n2\n3\n4\n5";
-		let fileContent = { data };
-		let expected = "1\n2\n3\n4\n5";
-		assert.strictEqual(generateTailLines(fileContent), expected);
+		let lines = "1\n2\n3\n4\n5";
+		let fileContent = { lines };
+		let expected = ["1", "2", "3", "4", "5"];
+		assert.deepStrictEqual(generateTailLines(fileContent), expected);
 	});
 	it("should give last total line of file content if tail count is given", function() {
-		let data = "1\n2\n3\n4\n5";
-		let fileContent = { data, count: 3 };
-		let expected = "3\n4\n5";
-		assert.strictEqual(generateTailLines(fileContent), expected);
+		let lines = "1\n2\n3\n4\n5";
+		let fileContent = { lines, count: 3 };
+		let expected = ["3", "4", "5"];
+		assert.deepStrictEqual(generateTailLines(fileContent), expected);
 	});
 });
-describe("generateErrorMessage", function() {
-	it("should generate error message of file type", function() {
-		const errorMessage = {
-			type: "file",
-			message: "no such file or directory",
-			filePath: "badFile.txt"
-		};
-		assert.strictEqual(
-			generateErrorMessage(errorMessage),
-			"tail: badFile.txt: no such file or directory"
-		);
-	});
-	it("should generate error message of offset type", function() {
-		const errorMessage = {
-			type: "offset",
-			message: "illegal offset -- a"
-		};
-		let message = `tail: illegal offset -- a`;
-		assert.strictEqual(generateErrorMessage(errorMessage), message);
-	});
-});
+
 describe("loadFileContent", function() {
 	it("should load file content", function() {
 		let tailOptions = { filePath: "sample.txt" };
@@ -55,13 +34,10 @@ describe("loadFileContent", function() {
 			assert.deepStrictEqual(path, "sample.txt");
 			return "1\n2\n3";
 		};
-		let expected = {
-			data: "1\n2\n3",
-			filePath: "sample.txt"
-		};
+		let expected = "1\n2\n3";
 		const encoding = "utf8";
 		assert.deepStrictEqual(
-			loadFileContent(tailOptions, reader, encoding),
+			loadFileContent(tailOptions.filePath, reader, encoding),
 			expected
 		);
 	});

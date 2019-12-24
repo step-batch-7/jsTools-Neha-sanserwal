@@ -1,30 +1,13 @@
 const generateTailLines = function(contentAndCount) {
-	let lines = contentAndCount.data.split("\n");
+	let lines = contentAndCount.lines.split("\n");
 	let count = contentAndCount.count || 10;
 	let slicedLines = lines.reverse().slice(0, count);
-	return slicedLines.reverse().join("\n");
-};
-const generateFileError = function(errMsg) {
-	if (!(errMsg.type === "file")) {
-		return "";
-	}
-	return `tail: ${errMsg.filePath}: ${errMsg.message}`;
-};
-const generateOffsetError = function(errMsg) {
-	if (!(errMsg.type === "offset")) {
-		return "";
-	}
-	return `tail: ${errMsg.message}`;
-};
-const generateErrorMessage = function(errMessage) {
-	let err = generateFileError(errMessage);
-	err = err.concat(generateOffsetError(errMessage));
-	return err;
+	return slicedLines.reverse();
 };
 
-const loadFileContent = function(tailOption, reader) {
-	tailOption.data = reader(tailOption.filePath, "utf8");
-	return tailOption;
+const loadFileContent = function(filePath, reader) {
+	let lines = reader(filePath, "utf8");
+	return lines;
 };
 
 const parseTailOption = function(userOption) {
@@ -45,6 +28,5 @@ module.exports = {
 	generateTailLines,
 	loadFileContent,
 	filterUserOption,
-	parseTailOption,
-	generateErrorMessage
+	parseTailOption
 };
