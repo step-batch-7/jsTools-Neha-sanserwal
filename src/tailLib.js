@@ -1,3 +1,4 @@
+"use strict";
 const generateTailLines = function(contentAndCount) {
 	let lines = contentAndCount.lines.split("\n");
 	let count = contentAndCount.count || 10;
@@ -6,14 +7,13 @@ const generateTailLines = function(contentAndCount) {
 };
 
 const loadFileContent = function(filePath, reader) {
-	let lines = reader(filePath, "utf8");
-	return lines;
+	return reader(filePath, "utf8");
 };
 
 const parseTailOptions = function(userOption) {
 	if (userOption[0] === "-n") {
-		count = Math.abs(userOption[1]);
-		filePath = userOption[2];
+		let count = Math.abs(userOption[1]);
+		let filePath = userOption[2];
 		return { filePath, count };
 	}
 	return { filePath: userOption[0], count: 10 };
