@@ -9,12 +9,13 @@ const generateTailLines = function(tailOptions, lines) {
 const loadFileLines = function(filePath, reader) {
 	return reader(filePath, "utf8");
 };
-
+const isOptionCount = function(option) {
+	return option === "-n";
+};
 const parseTailOptions = function(userOption) {
-	if (userOption[0] === "-n") {
+	if (isOptionCount(userOption[0])) {
 		let count = Math.abs(userOption[1]);
-		let filePath = userOption[2];
-		return { filePath, count };
+		return { filePath: userOption[2], count };
 	}
 	return { filePath: userOption[0], count: 10 };
 };

@@ -5,19 +5,16 @@ const {
 	filterUserOptions,
 	parseTailOptions
 } = require("./tailLib");
-const { ERRORS } = require("./errorMessageTemplate");
 
 const tail = function(cmdArgs, fs) {
-	let endResult = { err: "", lines: [] };
 	const userOption = filterUserOptions(cmdArgs);
 	let tailOptions = parseTailOptions(userOption);
 	if (!fs.existsSync(tailOptions.filePath)) {
-		endResult.err = `tail: ${tailOptions.filePath}: ${ERRORS.fileError}`;
-		return endResult;
+		let err = `tail: ${tailOptions.filePath}: No such file or directory`;
+		return { err, lines: "" };
 	}
 	let lines = loadFileLines(tailOptions.filePath, fs.readFileSync);
-	endResult.lines = generateTailLines(tailOptions, lines);
-	return endResult;
+	return { err: "", lines: generateTailLines(tailOptions, lines).join("\n") };
 };
 
 module.exports = {

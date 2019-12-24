@@ -11,7 +11,7 @@ describe("tail", function() {
 		let cmdArgs = ["node", "tail.js", "bad"];
 		let expected = {
 			err: "tail: bad: No such file or directory",
-			lines: []
+			lines: ""
 		};
 		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
 	});
@@ -29,7 +29,7 @@ describe("tail", function() {
 		let cmdArgs = ["node", "tail.js", "sample.txt"];
 		let expected = {
 			err: "",
-			lines: ["1", "2", "3"]
+			lines: "1\n2\n3"
 		};
 
 		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
