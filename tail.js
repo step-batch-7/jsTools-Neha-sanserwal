@@ -1,7 +1,7 @@
 const fs = require("fs");
-const { performTail } = require("./src/performTail");
+const { tail } = require("./src/performTail");
 const main = function(cmdArgs) {
-	let endResult = performTail(cmdArgs, fs);
+	let endResult = tail(cmdArgs, fs);
 	process.stderr.write(endResult.err);
 	process.stdout.write(endResult.lines.join("\n"));
 };
