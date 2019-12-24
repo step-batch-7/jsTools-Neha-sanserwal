@@ -7,7 +7,7 @@ const {
 } = require("./tailLib");
 const { ERRORS } = require("./errorMessageTemplate");
 
-const performTail = function(cmdArgs, fs) {
+const tail = function(cmdArgs, fs) {
 	let endResult = { err: "", lines: [] };
 	const userOption = filterUserOption(cmdArgs);
 	let tailOptions = parseTailOptions(userOption);
