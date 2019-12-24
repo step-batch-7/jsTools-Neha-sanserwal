@@ -6,6 +6,7 @@ const {
 	parseTailOptions
 } = require("./tailLib");
 const { ERRORS } = require("./errorMessageTemplate");
+
 const performTail = function(cmdArgs, fs) {
 	let endResult = { err: "", lines: [] };
 	const userOption = filterUserOption(cmdArgs);

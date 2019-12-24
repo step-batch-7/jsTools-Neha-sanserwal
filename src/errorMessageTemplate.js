@@ -1,6 +1,6 @@
 "use strict";
 const ERRORS = {
-	fileError: "no such file or directory"
+	fileError: "No such file or directory"
 };
 module.exports = {
 	ERRORS
