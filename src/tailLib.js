@@ -1,12 +1,12 @@
 "use strict";
-const generateTailLines = function(contentAndCount) {
-	let lines = contentAndCount.lines.split("\n");
-	let count = contentAndCount.count || 10;
-	let slicedLines = lines.reverse().slice(0, count);
+const generateTailLines = function(tailOptions, lines) {
+	let splittedLines = lines.split("\n");
+	let count = tailOptions.count;
+	let slicedLines = splittedLines.reverse().slice(0, count);
 	return slicedLines.reverse();
 };
 
-const loadFileContent = function(filePath, reader) {
+const loadFileLines = function(filePath, reader) {
 	return reader(filePath, "utf8");
 };
 
@@ -19,14 +19,14 @@ const parseTailOptions = function(userOption) {
 	return { filePath: userOption[0], count: 10 };
 };
 
-const filterUserOption = function(cmdArgs) {
+const filterUserOptions = function(cmdArgs) {
 	let [, , ...userOption] = [...cmdArgs];
 	return userOption;
 };
 
 module.exports = {
 	generateTailLines,
-	loadFileContent,
-	filterUserOption,
+	loadFileLines,
+	filterUserOptions,
 	parseTailOptions
 };

@@ -1,34 +1,34 @@
 const assert = require("chai").assert;
 const {
 	generateTailLines,
-	loadFileContent,
-	filterUserOption,
+	loadFileLines,
+	filterUserOptions,
 	parseTailOptions
 } = require("../src/tailLib");
 
 describe("generateTailLines", function() {
 	it("should give last ten line of file content if lines are more than 10", function() {
 		let lines = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11";
-		let fileContent = { lines };
+		let tailOptions = { count: 10 };
 		let expected = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
-		assert.deepStrictEqual(generateTailLines(fileContent), expected);
+		assert.deepStrictEqual(generateTailLines(tailOptions, lines), expected);
 	});
 	it("should give last total line of file content if lines are less than 10", function() {
 		let lines = "1\n2\n3\n4\n5";
 		let fileContent = { lines };
 		let expected = ["1", "2", "3", "4", "5"];
-		assert.deepStrictEqual(generateTailLines(fileContent), expected);
+		assert.deepStrictEqual(generateTailLines(fileContent, lines), expected);
 	});
 	it("should give last total line of file content if tail count is given", function() {
 		let lines = "1\n2\n3\n4\n5";
-		let fileContent = { lines, count: 3 };
+		let fileContent = { count: 3 };
 		let expected = ["3", "4", "5"];
-		assert.deepStrictEqual(generateTailLines(fileContent), expected);
+		assert.deepStrictEqual(generateTailLines(fileContent, lines), expected);
 	});
 });
 
-describe("loadFileContent", function() {
-	it("should load file content", function() {
+describe("loadFileLines", function() {
+	it("should load file lines", function() {
 		let tailOptions = { filePath: "sample.txt" };
 		const reader = function(path) {
 			assert.deepStrictEqual(path, "sample.txt");
@@ -37,7 +37,7 @@ describe("loadFileContent", function() {
 		let expected = "1\n2\n3";
 		const encoding = "utf8";
 		assert.deepStrictEqual(
-			loadFileContent(tailOptions.filePath, reader, encoding),
+			loadFileLines(tailOptions.filePath, reader, encoding),
 			expected
 		);
 	});
@@ -58,13 +58,13 @@ describe("parseTailOptions", function() {
 	});
 });
 
-describe("filterUserOption", function() {
+describe("filterUserOptions", function() {
 	it("should filter The user Option", function() {
 		let cmdArgs = ["node", "tail.js", "sample.txt"];
 		let userOption = ["sample.txt"];
-		assert.deepStrictEqual(filterUserOption(cmdArgs), userOption);
+		assert.deepStrictEqual(filterUserOptions(cmdArgs), userOption);
 		cmdArgs = ["node", "tail.js", "sample.txt", "a", "b"];
 		userOption = ["sample.txt", "a", "b"];
-		assert.deepStrictEqual(filterUserOption(cmdArgs), userOption);
+		assert.deepStrictEqual(filterUserOptions(cmdArgs), userOption);
 	});
 });
