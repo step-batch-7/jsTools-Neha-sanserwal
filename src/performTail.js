@@ -5,14 +5,13 @@ const {
 	filterUserOption,
 	parseTailOptions
 } = require("./tailLib");
-const { fileError } = require("./errorMessageTemplate");
-
+const { ERRORS } = require("./errorMessageTemplate");
 const performTail = function(cmdArgs, fs) {
 	let endResult = { err: "", lines: [] };
 	const userOption = filterUserOption(cmdArgs);
 	let tailOptions = parseTailOptions(userOption);
 	if (!fs.existsSync(tailOptions.filePath)) {
-		endResult.err = `tail: ${tailOptions.filePath}: ${fileError}`;
+		endResult.err = `tail: ${tailOptions.filePath}: ${ERRORS.fileError}`;
 		return endResult;
 	}
 	tailOptions.lines = loadFileContent(tailOptions.filePath, fs.readFileSync);
