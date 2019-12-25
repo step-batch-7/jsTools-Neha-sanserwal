@@ -3,12 +3,24 @@ const {
 	generateTailLines,
 	loadFileLines,
 	filterUserOptions,
-	parseTailOptions
+	parseTailOptions,
+	isOptionCount
 } = require("./tailLib");
 
+const areUserOptionsValid = function(userOptions) {
+	if (!isOptionCount(userOptions[0])) {
+		return true;
+	}
+	return Number.isInteger(+userOptions[1]);
+};
+
 const tail = function(cmdArgs, fs) {
-	const userOption = filterUserOptions(cmdArgs);
-	let tailOptions = parseTailOptions(userOption);
+	const userOptions = filterUserOptions(cmdArgs);
+	if (!areUserOptionsValid(userOptions)) {
+		let offset = userOptions[1];
+		return { err: `tail: illegal offset -- ${offset}`, lines: "" };
+	}
+	let tailOptions = parseTailOptions(userOptions);
 	if (!fs.existsSync(tailOptions.filePath)) {
 		let err = `tail: ${tailOptions.filePath}: No such file or directory`;
 		return { err, lines: "" };

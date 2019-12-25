@@ -41,6 +41,19 @@ describe("loadFileLines", function() {
 			expected
 		);
 	});
+	it("should trim the trailing whitespace at the ends", function() {
+		let tailOptions = { filePath: "sample.txt" };
+		const reader = function(path) {
+			assert.deepStrictEqual(path, "sample.txt");
+			return "1\n2\n3\n ";
+		};
+		let expected = "1\n2\n3";
+		const encoding = "utf8";
+		assert.deepStrictEqual(
+			loadFileLines(tailOptions.filePath, reader, encoding),
+			expected
+		);
+	});
 });
 
 describe("parseTailOptions", function() {

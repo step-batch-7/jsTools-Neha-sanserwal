@@ -7,7 +7,7 @@ const generateTailLines = function(tailOptions, lines) {
 };
 
 const loadFileLines = function(filePath, reader) {
-	return reader(filePath, "utf8");
+	return reader(filePath, "utf8").trim();
 };
 const isOptionCount = function(option) {
 	return option === "-n";
@@ -29,5 +29,6 @@ module.exports = {
 	generateTailLines,
 	loadFileLines,
 	filterUserOptions,
-	parseTailOptions
+	parseTailOptions,
+	isOptionCount
 };
