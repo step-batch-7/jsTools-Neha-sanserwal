@@ -1,2 +1,2 @@
 (node tail.js -n a ./appTest/goodFile.txt)
-tail: illegal offset -- q
+tail: illegal offset -- a
