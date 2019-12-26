@@ -21,7 +21,7 @@ const parseTailOptions = function(userOption) {
 };
 
 const filterUserOptions = function(cmdArgs) {
-	let [, , ...userOption] = [...cmdArgs];
+	let [, , ...userOption] = cmdArgs;
 	return userOption;
 };
 

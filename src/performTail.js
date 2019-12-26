@@ -21,9 +21,14 @@ const tail = function(cmdArgs, fs) {
 		let err = `tail: ${tailOptions.filePath}: No such file or directory`;
 		return { err, lines: "" };
 	}
+	try {
+		let lines = loadFileLines(tailOptions.filePath, fs.readFileSync);
 
-	let lines = loadFileLines(tailOptions.filePath, fs.readFileSync);
-	return { err: "", lines: generateTailLines(tailOptions, lines).join("\n") };
+		return { err: "", lines: lastNLines };
+	} catch (error) {
+		let err = `tail: ${tailOptions.filePath}: ${error.message}`;
+		return { err, lines: "" };
+	}
 };
 
 module.exports = {
