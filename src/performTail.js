@@ -6,6 +6,16 @@ const {
 	parseTailOptions
 } = require("./tailLib");
 const { validateUserArgs } = require("./validation");
+const fileErrors = {
+	fileName: "",
+	get EACCES() {
+		return `${this.fileName}: Permission denied`;
+	},
+	get EEXIST() {
+		return `${this.fileName}: No such file or directory`;
+	},
+	EISDIR: ""
+};
 
 const tail = function(cmdArgs, fs) {
 	const userArgs = filterUserOptions(cmdArgs);
@@ -18,8 +28,8 @@ const tail = function(cmdArgs, fs) {
 	let tailOptions = parseTailOptions(userArgs);
 
 	if (!fs.existsSync(tailOptions.filePath)) {
-		let err = `tail: ${tailOptions.filePath}: No such file or directory`;
-		return { err, lines: "" };
+		fileErrors.fileName = tailOptions.filePath;
+		return { err: `tail: ${fileErrors.EEXIST}`, lines: "" };
 	}
 
 	try {
@@ -27,8 +37,8 @@ const tail = function(cmdArgs, fs) {
 		let lastNLines = generateTailLines(tailOptions, lines);
 		return { err: "", lines: lastNLines.join("\n") };
 	} catch (error) {
-		let err = `tail: ${tailOptions.filePath}: ${error.message}`;
-		return { err, lines: "" };
+		fileErrors.fileName = tailOptions.filePath;
+		return { err: `tail: ${fileErrors[error.code]}`, lines: "" };
 	}
 };
 
