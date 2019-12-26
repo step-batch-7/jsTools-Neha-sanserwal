@@ -9,8 +9,9 @@ const validateOffset = function(offset) {
 
 const validateOptionAndOffset = function(option, offset) {
 	if (!isOptionCount(option)) {
+		let illegalOption = option.slice(1).trim("-");
 		let usage = `usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]`;
-		err = `tail: illegal option -- ${option}\n${usage}`;
+		err = `tail: illegal option -- ${illegalOption}\n${usage}`;
 		return { isValid: false, err: err };
 	}
 	return validateOffset(offset);
@@ -22,7 +23,7 @@ const isAOption = function(arg) {
 
 const validateUserArgs = function(userArgs) {
 	let option = userArgs[0];
-	if (isAOption(option)) {
+	if (option && isAOption(option)) {
 		return validateOptionAndOffset(option, userArgs[1]);
 	}
 	return { isValid: true, err: "" };

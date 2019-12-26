@@ -11,7 +11,7 @@ const fileErrors = {
 	get EACCES() {
 		return `${this.fileName}: Permission denied`;
 	},
-	get EEXIST() {
+	get ENOENT() {
 		return `${this.fileName}: No such file or directory`;
 	},
 	EISDIR: ""
@@ -29,7 +29,7 @@ const tail = function(cmdArgs, fs) {
 
 	if (!fs.existsSync(tailOptions.filePath)) {
 		fileErrors.fileName = tailOptions.filePath;
-		return { err: `tail: ${fileErrors.EEXIST}`, lines: "" };
+		return { err: `tail: ${fileErrors.ENOENT}`, lines: "" };
 	}
 
 	try {
