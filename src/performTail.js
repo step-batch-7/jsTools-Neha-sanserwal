@@ -6,9 +6,11 @@ const {
 	parseTailOptions
 } = require("./tailLib");
 const { validateUserArgs } = require("./validation");
+
 const tail = function(cmdArgs, fs) {
 	const userArgs = filterUserOptions(cmdArgs);
 	const userArgsValidation = validateUserArgs(userArgs);
+
 	if (!userArgsValidation.isValid) {
 		return { err: userArgsValidation.err, lines: "" };
 	}

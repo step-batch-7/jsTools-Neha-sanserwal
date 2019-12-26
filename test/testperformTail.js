@@ -2,6 +2,23 @@ const assert = require("chai").assert;
 const { tail } = require("../src/performTail");
 
 describe("tail", function() {
+	it("should give error if the options are not valid", function() {
+		let fs = {};
+		let cmdArgs = ["node", "tail.js", "-n", "a"];
+		let expected = {
+			err: "tail: illegal offset -- a",
+			lines: ""
+		};
+		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
+
+		fs = {};
+		cmdArgs = ["node", "tail.js", "-a"];
+		expected = {
+			err: "tail: illegal option -- -a",
+			lines: ""
+		};
+		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
+	});
 	it("should give error if can't find given file", function() {
 		const fs = {};
 		fs.existsSync = function(filePath) {
