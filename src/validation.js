@@ -1,4 +1,5 @@
 const { isOptionCount } = require("./tailLib");
+
 const validateOffset = function(offset) {
 	if (!Number.isInteger(parseInt(offset))) {
 		return { isValid: false, err: `tail: illegal offset -- ${offset}` };
@@ -8,7 +9,9 @@ const validateOffset = function(offset) {
 
 const validateOptionAndOffset = function(option, offset) {
 	if (!isOptionCount(option)) {
-		return { isValid: false, err: `tail: illegal option -- ${option}` };
+		let usage = `usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]`;
+		err = `tail: illegal option -- ${option}\n${usage}`;
+		return { isValid: false, err: err };
 	}
 	return validateOffset(offset);
 };
