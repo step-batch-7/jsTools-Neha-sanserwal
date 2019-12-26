@@ -1,0 +1,2 @@
+(node tail.js -a ./appTest/goodFile.txt)
+tail: illegal option -- -a
