@@ -14,7 +14,8 @@ describe("tail", function() {
 		fs = {};
 		cmdArgs = ["node", "tail.js", "-a"];
 		expected = {
-			err: "tail: illegal option -- -a",
+			err:
+				"tail: illegal option -- -a\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]",
 			lines: ""
 		};
 		assert.deepStrictEqual(tail(cmdArgs, fs), expected);

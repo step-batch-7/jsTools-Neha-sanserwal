@@ -13,18 +13,6 @@ describe("validateUserArgs", function() {
 			err: ""
 		});
 	});
-	it("should invalidate if the option is invalid", function() {
-		let userArgs = ["-a", "myFile"];
-		assert.deepStrictEqual(validateUserArgs(userArgs), {
-			isValid: false,
-			err: `tail: illegal option -- -a`
-		});
-		userArgs = ["-l", "myFile"];
-		assert.deepStrictEqual(validateUserArgs(userArgs), {
-			isValid: false,
-			err: `tail: illegal option -- -l`
-		});
-	});
 	it("should invalidate if the offset of valid option is invalid", function() {
 		let userArgs = ["-n", "myFile"];
 		assert.deepStrictEqual(validateUserArgs(userArgs), {
@@ -41,12 +29,12 @@ describe("validateUserArgs", function() {
 		let userArgs = ["-a", "myFile"];
 		assert.deepStrictEqual(validateUserArgs(userArgs), {
 			isValid: false,
-			err: `tail: illegal option -- -a`
+			err: `tail: illegal option -- -a\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]`
 		});
 		userArgs = ["-l", "myFile"];
 		assert.deepStrictEqual(validateUserArgs(userArgs), {
 			isValid: false,
-			err: `tail: illegal option -- -l`
+			err: `tail: illegal option -- -l\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]`
 		});
 	});
 	it("should validate if the offset of valid option is valid", function() {
