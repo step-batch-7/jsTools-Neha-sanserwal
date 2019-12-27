@@ -22,12 +22,9 @@ describe("tail", function() {
 	});
 
 	it("should give error if can't find given file", function() {
-		const fs = {};
-		fs.existsSync = function(filePath) {
-			assert.strictEqual(filePath, "bad");
-			return false;
-		};
 		let cmdArgs = ["node", "tail.js", "bad"];
+		fs = {};
+
 		let displayEndResult = function(endResult) {
 			assert.deepStrictEqual(
 				endResult.err,
@@ -35,15 +32,15 @@ describe("tail", function() {
 			);
 			assert.strictEqual(endResult.lines, "");
 		};
-
+		fs.readFile = function(filePath, encoding) {
+			assert.strictEqual(filePath, "bad");
+			assert.strictEqual(encoding, "utf8");
+		};
 		assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
 	});
 	it("should generate tail lines of given file", function() {
 		const fs = {};
-		fs.existsSync = function(filePath) {
-			assert.strictEqual(filePath, "sample.txt");
-			return true;
-		};
+
 		displayEndResult = function(endResult) {
 			assert.strictEqual(endResult.lines, "1\2\n3");
 		};

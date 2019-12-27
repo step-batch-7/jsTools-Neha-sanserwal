@@ -3,7 +3,8 @@ const {
 	generateTailLines,
 	loadFileLines,
 	filterUserOptions,
-	parseTailOptions
+	parseTailOptions,
+	readErrorAndContent
 } = require("../src/tailLib");
 
 describe("generateTailLines", function() {
@@ -64,5 +65,41 @@ describe("filterUserOptions", function() {
 		cmdArgs = ["node", "tail.js", "sample.txt", "a", "b"];
 		userOption = ["sample.txt", "a", "b"];
 		assert.deepStrictEqual(filterUserOptions(cmdArgs), userOption);
+	});
+});
+
+describe("readErrorAndContent", function() {
+	it("should display error if error is present", function() {
+		const displayEndResult = function(endResult) {
+			assert.strictEqual(endResult.err, "a: Permission denied");
+			assert.strictEqual(endResult.lines, "");
+		};
+
+		assert.strictEqual(
+			readErrorAndContent.call(
+				{
+					tailOptions: { count: 1, filePath: "a" },
+					displayEndResult
+				},
+				{ code: "EACCES" },
+				"a,b,c"
+			)
+		);
+	});
+	it("should display result if error is not present", function() {
+		const displayEndResult = function(endResult) {
+			assert.strictEqual(endResult.err, "");
+			assert.strictEqual(endResult.lines, "a,b,c");
+		};
+		assert.strictEqual(
+			readErrorAndContent.call(
+				{
+					tailOptions: { count: 1, filePath: "a" },
+					displayEndResult
+				},
+				null,
+				"a,b,c"
+			)
+		);
 	});
 });
