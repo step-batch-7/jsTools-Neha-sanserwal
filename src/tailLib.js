@@ -1,11 +1,10 @@
 "use strict";
 const fileErrors = {
-	fileName: "",
-	get EACCES() {
-		return `${this.fileName}: Permission denied`;
+	EACCES: function(fileName) {
+		return `tail: ${fileName}: Permission denied`;
 	},
-	get ENOENT() {
-		return `${this.fileName}: No such file or directory`;
+	ENOENT: function(fileName) {
+		return `tail: ${fileName}: No such file or directory`;
 	},
 	EISDIR: ""
 };
@@ -18,8 +17,8 @@ const generateTailLines = function(count, lines) {
 
 const readErrorAndContent = function(err, content) {
 	if (err) {
-		fileErrors.fileName = this.tailOptions.filePath;
-		let endResult = { err: `tail: ${fileErrors[err.code]}`, lines: "" };
+		const path = this.tailOptions.filePath;
+		const endResult = { err: `${fileErrors[err.code](path)}`, lines: "" };
 		this.displayEndResult(endResult);
 		return;
 	}
@@ -27,14 +26,6 @@ const readErrorAndContent = function(err, content) {
 	let lines = generateTailLines(this.tailOptions.count, content.trim());
 	this.displayEndResult({ lines: lines.join("\n"), err: "" });
 	return;
-};
-
-const loadFileLines = function(tailOptions, reader, displayEndResult) {
-	reader(
-		tailOptions.filePath,
-		"utf8",
-		readErrorAndContent.bind({ tailOptions, displayEndResult })
-	);
 };
 
 const isOptionCount = function(option) {
@@ -56,7 +47,6 @@ const filterUserOptions = function(cmdArgs) {
 
 module.exports = {
 	generateTailLines,
-	loadFileLines,
 	filterUserOptions,
 	parseTailOptions,
 	isOptionCount,

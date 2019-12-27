@@ -1,7 +1,6 @@
 `use strict`;
 const {
-	generateTailLines,
-	loadFileLines,
+	readErrorAndContent,
 	filterUserOptions,
 	parseTailOptions
 } = require("./tailLib");
@@ -17,7 +16,11 @@ const tail = function(cmdArgs, fs, displayEndResult) {
 	}
 
 	let tailOptions = parseTailOptions(userArgs);
-	loadFileLines(tailOptions, fs.readFile, displayEndResult);
+	fs.readFile(
+		tailOptions.filePath,
+		"utf8",
+		readErrorAndContent.bind({ displayEndResult, tailOptions })
+	);
 	return;
 };
 

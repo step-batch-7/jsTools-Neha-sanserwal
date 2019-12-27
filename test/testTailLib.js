@@ -25,23 +25,6 @@ describe("generateTailLines", function() {
 	});
 });
 
-describe("loadFileLines", function() {
-	it("should load file lines", function() {
-		let tailOptions = { filePath: "sample.txt" };
-		displayEndResult = function(endResult) {
-			assert.equal(endResult.err, "");
-			assert.equal(endResult.lines, "1\n2\n3");
-		};
-		const reader = function(path, encoding) {
-			assert.deepStrictEqual(path, "sample.txt");
-			assert.strictEqual(encoding, "utf8");
-		};
-		assert.deepStrictEqual(
-			loadFileLines(tailOptions, reader, displayEndResult)
-		);
-	});
-});
-
 describe("parseTailOptions", function() {
 	it("should do move array of user Option to Object with Valid key if only file is given", function() {
 		let userOption = ["sample.txt"];
