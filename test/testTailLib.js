@@ -71,7 +71,7 @@ describe("filterUserOptions", function() {
 describe("readErrorAndContent", function() {
 	it("should display error if error is present", function() {
 		const displayEndResult = function(endResult) {
-			assert.strictEqual(endResult.err, "a: Permission denied");
+			assert.strictEqual(endResult.err, "tail: a: Permission denied");
 			assert.strictEqual(endResult.lines, "");
 		};
 
