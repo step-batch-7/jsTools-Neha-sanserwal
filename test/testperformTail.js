@@ -5,21 +5,22 @@ describe("tail", function() {
 	it("should give error if the options are not valid", function() {
 		let fs = {};
 		let cmdArgs = ["node", "tail.js", "-n", "a"];
-		let expected = {
-			err: "tail: illegal offset -- a",
-			lines: ""
+		let displayEndResult = function(endResult) {
+			assert.strictEqual(endResult.err, "tail: illegal offset -- a");
+			assert.strictEqual(endResult.lines, "");
 		};
-		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
+		assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
 
 		fs = {};
 		cmdArgs = ["node", "tail.js", "-a"];
-		expected = {
-			err:
-				"tail: illegal option -- a\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]",
-			lines: ""
+		displayEndResult = function(endResult) {
+			let err = `tail: illegal option -- a\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]`;
+			assert.strictEqual(endResult.err, err);
+			assert.strictEqual(endResult.lines, "");
 		};
-		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
+		assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
 	});
+
 	it("should give error if can't find given file", function() {
 		const fs = {};
 		fs.existsSync = function(filePath) {
@@ -27,11 +28,15 @@ describe("tail", function() {
 			return false;
 		};
 		let cmdArgs = ["node", "tail.js", "bad"];
-		let expected = {
-			err: "tail: bad: No such file or directory",
-			lines: ""
+		let displayEndResult = function(endResult) {
+			assert.deepStrictEqual(
+				endResult.err,
+				"tail: bad: No such file or directory"
+			);
+			assert.strictEqual(endResult.lines, "");
 		};
-		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
+
+		assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
 	});
 	it("should generate tail lines of given file", function() {
 		const fs = {};
@@ -39,17 +44,15 @@ describe("tail", function() {
 			assert.strictEqual(filePath, "sample.txt");
 			return true;
 		};
-		fs.readFileSync = function(filePath, encoding) {
+		displayEndResult = function(endResult) {
+			assert.strictEqual(endResult.lines, "1\2\n3");
+		};
+		fs.readFile = function(filePath, encoding, writer) {
 			assert.strictEqual(filePath, "sample.txt");
 			assert.strictEqual(encoding, "utf8");
-			return "1\n2\n3";
-		};
-		let cmdArgs = ["node", "tail.js", "sample.txt"];
-		let expected = {
-			err: "",
-			lines: "1\n2\n3"
 		};
 
-		assert.deepStrictEqual(tail(cmdArgs, fs), expected);
+		let cmdArgs = ["node", "tail.js", "sample.txt"];
+		assert.strictEqual(tail(cmdArgs, fs, displayEndResult));
 	});
 });

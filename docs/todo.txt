@@ -30,5 +30,7 @@ cmd node tail.js -n -5 goodFile.txt
 
 cmd node tail.js -n wrongOffset goodFile.txt
 
-edit the manageTailOperation
-add function of validation 
+--done--edit the manageTailOperation
+--done--add function of validation
+--done-- add validation of offset and option
+--done-- turn reading of file async 

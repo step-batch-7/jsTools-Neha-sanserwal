@@ -6,6 +6,7 @@ const {
 	parseTailOptions
 } = require("./tailLib");
 const { validateUserArgs } = require("./validation");
+
 const fileErrors = {
 	fileName: "",
 	get EACCES() {
@@ -17,29 +18,24 @@ const fileErrors = {
 	EISDIR: ""
 };
 
-const tail = function(cmdArgs, fs) {
+const tail = function(cmdArgs, fs, displayEndResult) {
 	const userArgs = filterUserOptions(cmdArgs);
 	const userArgsValidation = validateUserArgs(userArgs);
 
 	if (!userArgsValidation.isValid) {
-		return { err: userArgsValidation.err, lines: "" };
+		displayEndResult({ err: userArgsValidation.err, lines: "" });
+		return;
 	}
 
 	let tailOptions = parseTailOptions(userArgs);
 
 	if (!fs.existsSync(tailOptions.filePath)) {
 		fileErrors.fileName = tailOptions.filePath;
-		return { err: `tail: ${fileErrors.ENOENT}`, lines: "" };
+		displayEndResult({ err: `tail: ${fileErrors.ENOENT}`, lines: "" });
+		return;
 	}
-
-	try {
-		let lines = loadFileLines(tailOptions.filePath, fs.readFileSync);
-		let lastNLines = generateTailLines(tailOptions, lines);
-		return { err: "", lines: lastNLines.join("\n") };
-	} catch (error) {
-		fileErrors.fileName = tailOptions.filePath;
-		return { err: `tail: ${fileErrors[error.code]}`, lines: "" };
-	}
+	loadFileLines(tailOptions, fs.readFile, displayEndResult);
+	return;
 };
 
 module.exports = {
