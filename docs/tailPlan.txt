@@ -82,9 +82,9 @@ tail : badFile.txt : no such file
         ['goodFile.txt']
 
     Input => array of string :cmdArgs
-        ["node","tail.js","goodFile.txt"]
+        ['node','tail.js','goodFile.txt']
                 or
-        ["node","tail.js","badFile.txt"]
+        ['node','tail.js','badFile.txt']
     
     name => parseUserOption
 
@@ -125,14 +125,14 @@ expected Output =>
         tail: badFile.txt: no such file
     
      Input => object: errorContent
-        {type:"tail",message:"no such file",fileName:'badFile'}
+        {type:'tail',message:'no such file',fileName:'badFile'}
 
     name => generateErrorMessage
 
 [2] Output => text: fileOption
-        {content:"",count:5}
+        {content:'',count:5}
     Input =>fileOption
-        {fileName: "goodFile.txt",count:5}
+        {fileName: 'goodFile.txt',count:5}
     name => loadFileContents
 
 [3a.] Output => fn(): loadFileContents(tailOptions) or generateErrorMessage(errorContent)
@@ -146,9 +146,9 @@ expected Output =>
 [3b.]  Output => object : stdinTailOption or errorMessage 
         {content : 'randomLines',count:5}
                 or
-        {content: "randomLines"}
+        {content: 'randomLines'}
                 or
-        {type:"",message:''}
+        {type:'',message:''}
     Input =>stdinTailOption
         {count: 5} or {}
     name : handleStdinTailOperation
@@ -173,21 +173,21 @@ expected Output =>
         {fileName:badFile.txt, count : 5}
 
     Input => array of string : userOption
-        ["badFile.txt", "-n", 5]
+        ['badFile.txt', '-n', 5]
                 or 
-        ["goodFile.txt","-n", 5]
+        ['goodFile.txt','-n', 5]
 
     name => parseTailOptions
 
 [6.] Output => array of string : userOption
-        ["badFile.txt", "-n", 5]
+        ['badFile.txt', '-n', 5]
                 or 
-        ["goodFile.txt","-n", 5]
+        ['goodFile.txt','-n', 5]
 
     Input => array of string :cmdArgs
-        ["node","tail.js","goodFile.txt","-n", 5]
+        ['node','tail.js','goodFile.txt','-n', 5]
                 or
-        ["node","tail.js","badFile.txt", "-n", 5]
+        ['node','tail.js','badFile.txt', '-n', 5]
     
     name => filterUserOption
 
