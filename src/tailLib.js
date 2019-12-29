@@ -11,15 +11,13 @@ const fileErrors = {
   EISDIR: ''
 };
 
-const generateTailLines = function (count, lines)
-{
+const generateTailLines = function (count, lines){
   const splittedLines = lines.split('\n');
   const slicedLines = splittedLines.reverse().slice(0, count);
   return slicedLines.reverse();
 };
 
-const readErrorAndContent = function (err, content)
-{
+const readErrorAndContent = function (err, content){
   if (err) {
     const path = this.tailOptions.filePath;
     const endResult = { err: `${fileErrors[err.code](path)}`, lines: '' };
@@ -31,13 +29,11 @@ const readErrorAndContent = function (err, content)
   this.displayEndResult({ lines: lines.join('\n'), err: '' });
 };
 
-const isOptionCount = function (option)
-{
+const isOptionCount = function (option){
   return option === '-n';
 };
 
-const parseTailOptions = function (userOption)
-{
+const parseTailOptions = function (userOption){
   if (isOptionCount(userOption[0])) {
     const count = Math.abs(userOption[1]);
     return { filePath: userOption[2], count };
@@ -45,8 +41,7 @@ const parseTailOptions = function (userOption)
   return { filePath: userOption[0], count: 10 };
 };
 
-const filterUserOptions = function (cmdArgs)
-{
+const filterUserOptions = function (cmdArgs){
   const [, , ...userOption] = cmdArgs;
   return userOption;
 };

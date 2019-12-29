@@ -1,21 +1,19 @@
 'use strict';
 const {
   readErrorAndContent,
-  filterUserOptions,
-  parseTailOptions
+  filterUserOptions
 } = require('./tailLib');
-const { validateUserArgs } = require('./validation');
+const { parseOptions } = require('./parseUserOptions.js');
 
 const tail = function(cmdArgs, fs, displayEndResult) {
   const userArgs = filterUserOptions(cmdArgs);
-  const userArgsValidation = validateUserArgs(userArgs);
-
-  if (!userArgsValidation.isValid) {
-    displayEndResult({ err: userArgsValidation.err, lines: '' });
+  const tailOptions = parseOptions(userArgs);
+  if (tailOptions.err) {
+    displayEndResult({ err: tailOptions.err, lines: '' });
     return;
   }
 
-  const tailOptions = parseTailOptions(userArgs);
+  
   fs.readFile(
     tailOptions.filePath,
     'utf8',

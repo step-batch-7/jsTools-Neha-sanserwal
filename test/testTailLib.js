@@ -8,32 +8,23 @@ const {
 
 describe('generateTailLines', function() {
   it('should give last ten line of file content if lines are more than 10', function() {
-    let lines = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11';
-    let expected = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
+    const lines = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11';
+    const expected = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
     assert.deepStrictEqual(generateTailLines(10, lines), expected);
   });
   it('should give last total line of file content if lines are less than 10', function() {
-    let lines = '1\n2\n3\n4\n5';
-    let expected = ['1', '2', '3', '4', '5'];
+    const lines = '1\n2\n3\n4\n5';
+    const expected = ['1', '2', '3', '4', '5'];
     assert.deepStrictEqual(generateTailLines(10, lines), expected);
   });
   it('should give last total line of file content if tail count is given', function() {
-    let lines = '1\n2\n3\n4\n5';
-    let expected = ['3', '4', '5'];
+    const lines = '1\n2\n3\n4\n5';
+    const expected = ['3', '4', '5'];
     assert.deepStrictEqual(generateTailLines(3, lines), expected);
   });
-});
-
-describe('parseTailOptions', function() {
-  it('should do move array of user Option to Object with Valid key if only file is given', function() {
-    let userOption = ['sample.txt'];
-    let tailOption = { filePath: 'sample.txt', count: 10 };
-
-    assert.deepStrictEqual(parseTailOptions(userOption), tailOption);
-  });
   it('should do move array of user Option to Object with Valid key if count is also given', function() {
-    let userOption = ['-n', '5', 'sample.txt'];
-    let tailOption = { filePath: 'sample.txt', count: 5 };
+    const userOption = ['-n', '5', 'sample.txt'];
+    const tailOption = { filePath: 'sample.txt', count: 5 };
     parseTailOptions(userOption);
     assert.deepStrictEqual(parseTailOptions(userOption), tailOption);
   });

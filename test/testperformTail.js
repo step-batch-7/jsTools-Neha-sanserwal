@@ -22,10 +22,10 @@ describe('tail', function() {
   });
 
   it("should give error if can't find given file", function() {
-    let cmdArgs = ['node', 'tail.js', 'bad'];
-    let fs = {};
+    const cmdArgs = ['node', 'tail.js', 'bad'];
+    const fs = {};
 
-    let displayEndResult = function(endResult) {
+    const displayEndResult = function(endResult) {
       assert.deepStrictEqual(
         endResult.err,
         'tail: bad: No such file or directory'
