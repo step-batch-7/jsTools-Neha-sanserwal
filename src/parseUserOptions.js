@@ -26,11 +26,12 @@ const parseN = function(options) {
 };
 
 const isAOption = function(arg){
-  const optionPredecessor = arg.slice(0,1);
-  return (optionPredecessor === '-' || Number.isInteger(arg));
+  const count = parseInt(arg);
+  return arg.startsWith('-')||arg.startsWith('+') || Number.isInteger(count);
 };
 const isACountOption = function(arg){
-  return arg.slice(1,).startsWith('n')
+  const count = parseInt(arg);
+  return arg.startsWith('-n') || Number.isInteger(count) ;
 }
 const parseOptions = function(userArgs){
   if(!isAOption(userArgs[0])){
@@ -38,7 +39,7 @@ const parseOptions = function(userArgs){
   }
   if(!isACountOption(userArgs[0])){
     const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
-    const err = `tail: illegal option -- a\nusage: ${usage}`;
+    const err = `tail: illegal option -- ${userArgs[0].slice(1, 2)}\nusage: ${usage}`;
     return {err, filePath: '', count: '' };
   }
   return parseN(userArgs);

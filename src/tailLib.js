@@ -13,7 +13,15 @@ const fileErrors = {
 
 const generateTailLines = function (count, lines){
   const splittedLines = lines.split('\n');
-  const slicedLines = splittedLines.reverse().slice(0, count);
+  if(count=== '+1'){
+    return splittedLines;
+  }
+  if(count.startsWith('+')){
+    const slicedLines = splittedLines.slice(count, lines.length);
+    return slicedLines;
+  }
+  const absCount = Math.abs(count);
+  const slicedLines = splittedLines.reverse().slice(0, absCount);
   return slicedLines.reverse();
 };
 

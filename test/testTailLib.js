@@ -10,24 +10,29 @@ describe('generateTailLines', function() {
   it('should give last ten line of file content if lines are more than 10', function() {
     const lines = '1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11';
     const expected = ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
-    assert.deepStrictEqual(generateTailLines(10, lines), expected);
+    assert.deepStrictEqual(generateTailLines('10', lines), expected);
   });
   it('should give last total line of file content if lines are less than 10', function() {
     const lines = '1\n2\n3\n4\n5';
     const expected = ['1', '2', '3', '4', '5'];
-    assert.deepStrictEqual(generateTailLines(10, lines), expected);
+    assert.deepStrictEqual(generateTailLines('10', lines), expected);
   });
   it('should give last total line of file content if tail count is given', function() {
     const lines = '1\n2\n3\n4\n5';
     const expected = ['3', '4', '5'];
-    assert.deepStrictEqual(generateTailLines(3, lines), expected);
+    assert.deepStrictEqual(generateTailLines('3', lines), expected);
   });
-  it('should do move array of user Option to Object with Valid key if count is also given', function() {
-    const userOption = ['-n', '5', 'sample.txt'];
-    const tailOption = { filePath: 'sample.txt', count: 5 };
-    parseTailOptions(userOption);
-    assert.deepStrictEqual(parseTailOptions(userOption), tailOption);
+  it('should give total line of file content if tail count is +1', function() {
+    const lines = '1\n2\n3\n4\n5';
+    const expected = ['1', '2', '3', '4', '5'];
+    assert.deepStrictEqual(generateTailLines('+1', lines), expected);
   });
+  it('should give chop first n lines if the number is positively signed', function() {
+    const lines = '1\n2\n3\n4\n5';
+    const expected = ['4', '5'];
+    assert.deepStrictEqual(generateTailLines('+3', lines), expected);
+  });
+  
 });
 
 describe('filterUserOptions', function() {
@@ -51,7 +56,7 @@ describe('readErrorAndContent', function() {
     assert.strictEqual(
       readErrorAndContent.call(
         {
-          tailOptions: { count: 1, filePath: 'a' },
+          tailOptions: { count: '1', filePath: 'a' },
           displayEndResult
         },
         { code: 'EACCES' },
@@ -67,7 +72,7 @@ describe('readErrorAndContent', function() {
     assert.strictEqual(
       readErrorAndContent.call(
         {
-          tailOptions: { count: 1, filePath: 'a' },
+          tailOptions: { count: '1', filePath: 'a' },
           displayEndResult
         },
         null,

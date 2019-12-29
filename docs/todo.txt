@@ -34,3 +34,4 @@ cmd node tail.js -n wrongOffset goodFile.txt
 --done--add function of validation
 --done-- add validation of offset and option
 --done-- turn reading of file async 
+edit generate tail Lines
