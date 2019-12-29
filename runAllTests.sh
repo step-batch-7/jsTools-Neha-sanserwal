@@ -1,1 +1,1 @@
-./runAppTests.sh appTest/*.test
+mocha && ./runAppTests.sh appTest/*.test

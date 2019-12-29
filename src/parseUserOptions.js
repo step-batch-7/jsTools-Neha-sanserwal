@@ -10,7 +10,7 @@ const isOffsetAttached = function(option){
 };
 
 const isOffsetSeparate = function(option){
-  return option.length < 3 && option.includes('-n')
+  return option.length < 3 && option.includes('-n');
 };
 
 const parseN = function(options) {
@@ -35,7 +35,7 @@ const isACountOption = function(arg){
 const parseOptions = function(userArgs){
   const [option] = userArgs;
   if(!isAOption(option)){
-    return {err: '', filePath: option, count: 10};
+    return {err: '', filePath: option, count: "10"};
   }
   if(!isACountOption(option)){
     const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
