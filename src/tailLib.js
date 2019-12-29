@@ -41,23 +41,14 @@ const isOptionCount = function (option){
   return option === '-n';
 };
 
-const parseTailOptions = function (userOption){
-  if (isOptionCount(userOption[0])) {
-    const count = Math.abs(userOption[1]);
-    return { filePath: userOption[2], count };
-  }
-  return { filePath: userOption[0], count: 10 };
-};
-
 const filterUserOptions = function (cmdArgs){
-  const [, , ...userOption] = cmdArgs;
-  return userOption;
+  const [, , ...userOptions] = cmdArgs;
+  return userOptions;
 };
 
 module.exports = {
   generateTailLines,
   filterUserOptions,
-  parseTailOptions,
   isOptionCount,
   readErrorAndContent
 };

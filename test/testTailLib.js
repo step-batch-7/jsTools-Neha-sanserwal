@@ -2,7 +2,6 @@ const assert = require('chai').assert;
 const {
   generateTailLines,
   filterUserOptions,
-  parseTailOptions,
   readErrorAndContent
 } = require('../src/tailLib');
 
