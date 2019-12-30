@@ -1,17 +1,17 @@
 const assert = require('chai').assert;
+const sinon = require('sinon');
+const fs = require('fs');
 const { tail } = require('../src/performTail');
 
 describe('tail', function() {
   it('should give error if the options are not valid', function() {
-    let fs = {};
+    const fs = {};
     let cmdArgs = ['node', 'tail.js', '-n', 'a'];
     let displayEndResult = function(endResult) {
       assert.strictEqual(endResult.err, 'tail: illegal offset -- a');
       assert.strictEqual(endResult.lines, '');
     };
     assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
-
-    fs = {};
     cmdArgs = ['node', 'tail.js', '-a'];
     displayEndResult = function(endResult) {
       const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
@@ -23,34 +23,34 @@ describe('tail', function() {
   });
 
   it('should give error if cannot find given file', function() {
-    const cmdArgs = ['node', 'tail.js', 'bad'];
-    const fs = {};
+   
 
     const displayEndResult = function(endResult) {
-      assert.deepStrictEqual(
-        endResult.err,
-        'tail: bad: No such file or directory'
-      );
+      assert.deepStrictEqual(endResult.err, 'tail: bad: No such file or directory');
       assert.strictEqual(endResult.lines, '');
     };
-    fs.readFile = function(filePath, encoding) {
-      assert.strictEqual(filePath, 'bad');
-      assert.strictEqual(encoding, 'utf8');
-    };
-    assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
+    const fakeReader = sinon.fake.yieldsAsync({code: 'ENOENT'}, null);
+    sinon.replace(fs, 'readFile', fakeReader);
+
+    const cmdArgs = ['node', 'tail.js', 'bad'];
+    tail(cmdArgs, fs, displayEndResult);
+
+    assert(fakeReader.calledOnce);
+    sinon.restore();
   });
   it('should generate tail lines of given file', function() {
-    const fs = {};
-
     const displayEndResult = function(endResult) {
-      assert.strictEqual(endResult.lines, '1\2\n3');
+      assert.strictEqual(endResult.lines, '1\n2\n3');
     };
-    fs.readFile = function(filePath, encoding) {
-      assert.strictEqual(filePath, 'sample.txt');
-      assert.strictEqual(encoding, 'utf8');
-    };
+   
+    const fakeReader = sinon.fake.yieldsAsync(null, '1\n2\n3');
+    sinon.replace(fs, 'readFile', fakeReader);
 
     const cmdArgs = ['node', 'tail.js', 'sample.txt'];
-    assert.strictEqual(tail(cmdArgs, fs, displayEndResult));
+    tail(cmdArgs, fs, displayEndResult);
+    assert(fakeReader.calledWith('sample.txt', 'utf8'));
+  
+    sinon.restore();
+
   });
 });

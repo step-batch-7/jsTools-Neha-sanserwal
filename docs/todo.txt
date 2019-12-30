@@ -34,4 +34,15 @@ cmd node tail.js -n wrongOffset goodFile.txt
 --done--add function of validation
 --done-- add validation of offset and option
 --done-- turn reading of file async 
-edit generate tail Lines
+--done-- edit generate tail Lines
+
+
+========= todo for 0.4 =================
+node tail.js 
+// will wait for data
+test of stdin = appTest and unit test
+create a stdin reader.
+store the data to object
+end the stdin reader on 
+generate first 10 lines 
+display error and content

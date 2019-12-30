@@ -1,17 +1,15 @@
 'use strict';
 const fileErrors = {
-  EACCES: function (fileName)
-  {
+  EACCES: function (fileName) {
     return `tail: ${fileName}: Permission denied`;
   },
-  ENOENT: function (fileName)
-  {
+  ENOENT: function (fileName) {
     return `tail: ${fileName}: No such file or directory`;
   },
   EISDIR: ''
 };
 
-const generateTailLines = function (count, lines){
+const generateTailLines = function (count, lines) {
   const splittedLines = lines.split('\n');
   if(count=== '+1'){
     return splittedLines;
@@ -26,14 +24,12 @@ const generateTailLines = function (count, lines){
   return slicedLines.reverse();
 };
 
-const readErrorAndContent = function (err, content){
+const readErrorAndContent = function (err, content) {
   if (err) {
-    const path = this.tailOptions.filePath;
-    const endResult = { err: `${fileErrors[err.code](path)}`, lines: '' };
-    this.displayEndResult(endResult);
+    const error  = `${fileErrors[err.code](this.tailOptions.filePath)}`;
+    this.displayEndResult({ err: error, lines: '' });
     return;
   }
-
   const lines = generateTailLines(this.tailOptions.count, content.trim());
   this.displayEndResult({ lines: lines.join('\n'), err: '' });
 };
