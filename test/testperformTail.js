@@ -14,14 +14,15 @@ describe('tail', function() {
     fs = {};
     cmdArgs = ['node', 'tail.js', '-a'];
     displayEndResult = function(endResult) {
-      let err = `tail: illegal option -- a\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]`;
+      const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
+      const err = `tail: illegal option -- a\nusage: ${usage}`;
       assert.strictEqual(endResult.err, err);
       assert.strictEqual(endResult.lines, '');
     };
     assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
   });
 
-  it("should give error if can't find given file", function() {
+  it('should give error if cannot find given file', function() {
     const cmdArgs = ['node', 'tail.js', 'bad'];
     const fs = {};
 
@@ -49,7 +50,7 @@ describe('tail', function() {
       assert.strictEqual(encoding, 'utf8');
     };
 
-    let cmdArgs = ['node', 'tail.js', 'sample.txt'];
+    const cmdArgs = ['node', 'tail.js', 'sample.txt'];
     assert.strictEqual(tail(cmdArgs, fs, displayEndResult));
   });
 });

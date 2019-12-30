@@ -6,17 +6,20 @@ const parseOffset = function(num) {
 };
 
 const isOffsetAttached = function(option){
-  return option.length > 2 && option.includes('-n');
+  const optLength = 2;
+  return option.length > optLength && option.startsWith('-n');
 };
 
 const isOffsetSeparate = function(option){
-  return option.length < 3 && option.includes('-n');
+  const optLength = 3;
+  return option.length < optLength && option.startsWith('-n');
 };
 
 const parseN = function(options) {
   const [option, offset, filePath] = options;
   if (isOffsetAttached(option)) {
-    return { ...parseOffset(option.slice(2)), filePath: offset };
+    const [, , ...newOffset] = option;
+    return { ...parseOffset(newOffset.join('')), filePath: offset };
   }
   if (isOffsetSeparate(option)) {
     return { ...parseOffset(offset), filePath };
@@ -35,11 +38,12 @@ const isACountOption = function(arg){
 const parseOptions = function(userArgs){
   const [option] = userArgs;
   if(!isAOption(option)){
-    return {err: '', filePath: option, count: "10"};
+    return {err: '', filePath: option, count: '10'};
   }
   if(!isACountOption(option)){
+    const [, optErr]=option;
     const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
-    const err = `tail: illegal option -- ${option.slice(1, 2)}\nusage: ${usage}`;
+    const err = `tail: illegal option -- ${optErr}\nusage: ${usage}`;
     return {err, filePath: '', count: '' };
   }
   return parseN(userArgs);

@@ -12,13 +12,8 @@ const tail = function(cmdArgs, fs, displayEndResult) {
     displayEndResult({ err: tailOptions.err, lines: '' });
     return;
   }
-
-  
-  fs.readFile(
-    tailOptions.filePath,
-    'utf8',
-    readErrorAndContent.bind({ displayEndResult, tailOptions })
-  );
+  const boundObj = { displayEndResult, tailOptions };
+  fs.readFile(tailOptions.filePath, 'utf8', readErrorAndContent.bind(boundObj));
 };
 
 module.exports = {

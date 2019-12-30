@@ -21,7 +21,8 @@ const generateTailLines = function (count, lines){
     return slicedLines;
   }
   const absCount = Math.abs(count);
-  const slicedLines = splittedLines.reverse().slice(0, absCount);
+  const start = 0;
+  const slicedLines = splittedLines.reverse().slice(start, absCount);
   return slicedLines.reverse();
 };
 
@@ -37,10 +38,6 @@ const readErrorAndContent = function (err, content){
   this.displayEndResult({ lines: lines.join('\n'), err: '' });
 };
 
-const isOptionCount = function (option){
-  return option === '-n';
-};
-
 const filterUserOptions = function (cmdArgs){
   const [, , ...userOptions] = cmdArgs;
   return userOptions;
@@ -49,6 +46,5 @@ const filterUserOptions = function (cmdArgs){
 module.exports = {
   generateTailLines,
   filterUserOptions,
-  isOptionCount,
   readErrorAndContent
 };
