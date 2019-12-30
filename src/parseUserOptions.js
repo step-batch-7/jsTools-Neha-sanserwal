@@ -5,7 +5,7 @@ const parseOffset = function(num) {
   return { err: '', count: `${num}` };
 };
 
-const isOffsetAttached = function(option){
+const isOffsetAttached = function(option) {
   const optLength = 2;
   return option.length > optLength && option.startsWith('-n');
 };
@@ -27,25 +27,30 @@ const parseN = function(options) {
   return { ...parseOffset(option), filePath: offset };
 };
 
-const isAOption = function(arg){
+const isAOption = function(arg) {
   const count = parseInt(arg);
   return arg.startsWith('-')||arg.startsWith('+') || Number.isInteger(count);
 };
+
 const isACountOption = function(arg){
   const count = parseInt(arg);
   return arg.startsWith('-n') || Number.isInteger(count) ;
 };
+
 const parseOptions = function(userArgs){
   const [option] = userArgs;
-  if(!isAOption(option)){
+
+  if(!isAOption(option)) {
     return {err: '', filePath: option, count: '10'};
   }
-  if(!isACountOption(option)){
+
+  if(!isACountOption(option)) {
     const [, optErr]=option;
     const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
     const err = `tail: illegal option -- ${optErr}\nusage: ${usage}`;
     return {err, filePath: '', count: '' };
   }
+  
   return parseN(userArgs);
 
 };

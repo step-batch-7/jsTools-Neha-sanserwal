@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const {
   generateTailLines,
   filterUserOptions,
-  readErrorAndContent
+  onReadingContent
 } = require('../src/tailLib');
 
 describe('generateTailLines', function() {
@@ -52,22 +52,22 @@ describe('filterUserOptions', function() {
 
 describe('readErrorAndContent', function() {
   it('should display error if error is present', function() {
-    const displayEndResult = function(endResult) {
+    const onCompletion = function(endResult) {
       assert.strictEqual(endResult.err, 'tail: a: Permission denied');
       assert.strictEqual(endResult.lines, '');
     };
     const tailOptions =  { count: '1', filePath: 'a' };
-    const boundObj = {tailOptions, displayEndResult};
+    const boundObj = {tailOptions, onCompletion};
     const err = { code: 'EACCES' };
-    assert.strictEqual(readErrorAndContent.call(boundObj, err, 'a,b,c'));
+    assert.strictEqual(onReadingContent.call(boundObj, err, 'a,b,c'));
   });
   it('should display result if error is not present', function() {
-    const displayEndResult = function(endResult) {
+    const onCompletion = function(endResult) {
       assert.strictEqual(endResult.err, '');
       assert.strictEqual(endResult.lines, 'a,b,c');
     };
     const tailOptions =  { count: '1', filePath: 'a' };
-    const boundObj = {tailOptions, displayEndResult};
-    assert.strictEqual(readErrorAndContent.call(boundObj, null, 'a,b,c'));
+    const boundObj = {tailOptions, onCompletion};
+    assert.strictEqual(onReadingContent.call(boundObj, null, 'a,b,c'));
   });
 });

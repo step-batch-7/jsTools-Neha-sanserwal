@@ -24,14 +24,14 @@ const generateTailLines = function (count, lines) {
   return slicedLines.reverse();
 };
 
-const readErrorAndContent = function (err, content) {
+const onReadingContent = function (err, content) {
   if (err) {
     const error  = `${fileErrors[err.code](this.tailOptions.filePath)}`;
-    this.displayEndResult({ err: error, lines: '' });
+    this.onCompletion({ err: error, lines: '' });
     return;
   }
   const lines = generateTailLines(this.tailOptions.count, content.trim());
-  this.displayEndResult({ lines: lines.join('\n'), err: '' });
+  this.onCompletion({ lines: lines.join('\n'), err: '' });
 };
 
 const filterUserOptions = function (cmdArgs){
@@ -42,5 +42,5 @@ const filterUserOptions = function (cmdArgs){
 module.exports = {
   generateTailLines,
   filterUserOptions,
-  readErrorAndContent
+  onReadingContent
 };

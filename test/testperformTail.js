@@ -1,6 +1,4 @@
 const assert = require('chai').assert;
-const sinon = require('sinon');
-const fs = require('fs');
 const { tail } = require('../src/performTail');
 
 describe('tail', function() {
@@ -23,34 +21,37 @@ describe('tail', function() {
   });
 
   it('should give error if cannot find given file', function() {
-   
-
-    const displayEndResult = function(endResult) {
-      assert.deepStrictEqual(endResult.err, 'tail: bad: No such file or directory');
+    const fs = {};
+    const onCompletion = function(endResult) {
+      const err = 'tail: bad: No such file or directory';
+      assert.deepStrictEqual(endResult.err, err);
       assert.strictEqual(endResult.lines, '');
     };
-    const fakeReader = sinon.fake.yieldsAsync({code: 'ENOENT'}, null);
-    sinon.replace(fs, 'readFile', fakeReader);
-
+    fs.readFile =function(path, encoding, callback) {
+      assert.strictEqual(path, 'bad');
+      assert.strictEqual(encoding, 'utf8');
+      setTimeout(() => {
+        callback({code: 'ENOENT'}, null);
+      }, 0);
+    };
     const cmdArgs = ['node', 'tail.js', 'bad'];
-    tail(cmdArgs, fs, displayEndResult);
-
-    assert(fakeReader.calledOnce);
-    sinon.restore();
+    tail(cmdArgs, fs, onCompletion);
   });
   it('should generate tail lines of given file', function() {
+    const fs = {};
     const displayEndResult = function(endResult) {
       assert.strictEqual(endResult.lines, '1\n2\n3');
     };
-   
-    const fakeReader = sinon.fake.yieldsAsync(null, '1\n2\n3');
-    sinon.replace(fs, 'readFile', fakeReader);
+
+    fs.readFile =function(path, encoding, callback) {
+      assert.strictEqual(path, 'sample.txt');
+      assert.strictEqual(encoding, 'utf8');
+      setTimeout(() => {
+        callback(null, '1\n2\n3');
+      }, 0);
+    };
 
     const cmdArgs = ['node', 'tail.js', 'sample.txt'];
     tail(cmdArgs, fs, displayEndResult);
-    assert(fakeReader.calledWith('sample.txt', 'utf8'));
-  
-    sinon.restore();
-
   });
 });
