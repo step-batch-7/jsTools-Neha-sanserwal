@@ -1,11 +1,12 @@
 'use strict';
-const {loadTailLines,
-  generateTailLines, filterUserOptions} = require('./tailLib');
+const { loadTailLines,
+  generateTailLines, 
+  filterUserOptions } = require('./tailLib');
 const { parseOptions } = require('./parseUserOptions.js');
 
-const pickAction = function(path, readers){
-  if(path){
-    return readers.fs.createReadStream(path);
+const pickReader = function(filePath, readers){
+  if(filePath){
+    return readers.createReadStream(filePath);
   } 
   return readers.stdin;
 };
@@ -19,8 +20,8 @@ const tail = function(cmdArgs, readers, onCompletion) {
     return;
   }
 
-  const path = tailOptions.filePath;
-  const reader = pickAction(path, readers);
+  const filePath = tailOptions.filePath;
+  const reader = pickReader(filePath, readers);
   reader.setEncoding('utf8');
 
   const onLoadingLines = function(loadedContent){
@@ -34,9 +35,10 @@ const tail = function(cmdArgs, readers, onCompletion) {
     onCompletion({err: '', lines: lines.join('\n')});
   };
 
-  loadTailLines(path, reader, onLoadingLines);
+  loadTailLines(filePath, reader, onLoadingLines);
 };
 
 module.exports = {
-  tail
+  tail,
+  pickReader
 };

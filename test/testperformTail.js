@@ -1,6 +1,21 @@
 const assert = require('chai').assert;
 const sinon = require('sinon');
-const { tail } = require('../src/performTail');
+const { tail, pickReader } = require('../src/performTail');
+
+describe('pickReader', function(){
+  it('should not create readStream when file path is not present', function(){
+    const filePath = undefined;
+    const readers = {createReadStream: sinon.fake(), stdin: {}};
+    pickReader(filePath, readers);
+    assert(readers.createReadStream.notCalled);
+  });
+  it('should create readStream when file path is present', function(){
+    const filePath = 'a';
+    const readers = { createReadStream: sinon.fake(), stdin: {}};
+    pickReader(filePath, readers);
+    assert(readers.createReadStream.calledOnce);
+  });
+});
 
 describe('tail', function() {
   it('should give error if the options are not valid', function(done) {
@@ -24,12 +39,10 @@ describe('tail', function() {
   });
 
   it('should give error if cannot find given file', function(done) {
-    const fs = {};
     const stdin = {};
-    const reader= {setEncoding: sinon.fake(), on: sinon.fake() };
-    
-    fs.createReadStream = function(path){
-      assert.strictEqual(path, 'bad');
+    const reader= {setEncoding: sinon.fake(), on: sinon.fake() };   
+    const createReadStream = function(filePath){
+      assert.strictEqual(filePath, 'bad');
       return reader;
     };
     const onCompletion = function(endResult) {
@@ -38,9 +51,8 @@ describe('tail', function() {
       assert.strictEqual(endResult.lines, '');
       done();
     };
-  
     const cmdArgs = ['node', 'tail.js', 'bad'];
-    tail(cmdArgs, {fs, stdin}, onCompletion);
+    tail(cmdArgs, {createReadStream, stdin}, onCompletion);
     assert.strictEqual(reader.on.firstCall.args[0], 'data');
     assert.strictEqual(reader.on.secondCall.args[0], 'end');
     assert.strictEqual(reader.on.callCount, 3);
@@ -48,14 +60,13 @@ describe('tail', function() {
   });
 
   it('should generate tail lines of given file', function(done) {
-    const fs = {};
     const stdin = {};
     const reader= {setEncoding: sinon.fake(), on: sinon.fake() };
-    
-    fs.createReadStream = function(path){
-      assert.strictEqual(path, 'good');
+    const createReadStream = function(filePath){
+      assert.strictEqual(filePath, 'good');
       return reader;
     };
+
     const onCompletion = function(endResult) {
       assert.deepStrictEqual(endResult.err, '');
       assert.strictEqual(endResult.lines, 'a\nb\nc');
@@ -63,7 +74,7 @@ describe('tail', function() {
     };
   
     const cmdArgs = ['node', 'tail.js', 'good'];
-    tail(cmdArgs, {fs, stdin}, onCompletion);
+    tail(cmdArgs, {createReadStream, stdin}, onCompletion);
     assert.strictEqual(reader.on.firstCall.args[0], 'data');
     assert.strictEqual(reader.on.secondCall.args[0], 'end');
     assert.strictEqual(reader.on.callCount, 3);

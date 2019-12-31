@@ -1,4 +1,4 @@
-const fs = require('fs');
+const {createReadStream} = require('fs');
 const { tail } = require('./src/performTail');
 
 const displayEndResult = function(endResult) {
@@ -8,6 +8,6 @@ const displayEndResult = function(endResult) {
 
 const main = function(cmdArgs) {
   const {stdin} = process;
-  tail(cmdArgs, {fs, stdin}, displayEndResult);
+  tail(cmdArgs, {createReadStream, stdin}, displayEndResult);
 };
 main(process.argv);
