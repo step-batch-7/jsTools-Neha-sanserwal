@@ -1,4 +1,3 @@
-
 const assert = require('chai').assert;
 const { parseOffset, parseN} = require('../src/parseUserOptions');
 const {parseOptions } = require('../src/parseUserOptions');
@@ -20,6 +19,7 @@ describe('parseN', function() {
     const expected = { err: '', count: '1', filePath: 'ab'};
     assert.deepStrictEqual(parseN(['-n1', 'ab']), expected);
   });
+
   it('should set error if option is combined with invalid offset', function() {
     assert.deepStrictEqual(parseN(['-na', 'd']), {
       err: 'tail: illegal offset -- a',
@@ -27,10 +27,12 @@ describe('parseN', function() {
       filePath: 'd'
     });
   });
+
   it('should set count if option is separated from offset', function() {
     const expected = { err: '', count: '1', filePath: 'a'};
     assert.deepStrictEqual(parseN(['-n', '1', 'a']), expected);
   });
+
   it('should set error if separated offset is not a number', function() {
     assert.deepStrictEqual(parseN(['-n', 'a', 'ab']), {
       err: 'tail: illegal offset -- a',
@@ -38,6 +40,7 @@ describe('parseN', function() {
       filePath: 'ab'
     });
   });
+
   it('should set count if option is given as offset', function() {
     const expected = { err: '', count: '-1', filePath: 'abc'};
     assert.deepStrictEqual(parseN(['-1', 'abc']), expected);
@@ -53,6 +56,7 @@ describe('parseOptions', function() {
     };
     assert.deepStrictEqual(parseOptions(['-a', '1', 'sd']), expected);
   });
+  
   it('should set count if option is valid', function() {
     const expected = {
       err: '',

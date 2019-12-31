@@ -28,6 +28,9 @@ const parseN = function(options) {
 };
 
 const isAOption = function(arg) {
+  if(!arg){
+    return false;
+  }
   const count = parseInt(arg);
   return arg.startsWith('-')||arg.startsWith('+') || Number.isInteger(count);
 };
@@ -39,7 +42,6 @@ const isACountOption = function(arg){
 
 const parseOptions = function(userArgs){
   const [option] = userArgs;
-
   if(!isAOption(option)) {
     return {err: '', filePath: option, count: '10'};
   }
@@ -54,7 +56,6 @@ const parseOptions = function(userArgs){
   return parseN(userArgs);
 
 };
-
 
 module.exports = {
   parseOffset,

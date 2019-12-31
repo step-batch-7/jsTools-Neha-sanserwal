@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const { tail } = require('./src/performTail');
 
 const displayEndResult = function(endResult) {
@@ -7,6 +8,7 @@ const displayEndResult = function(endResult) {
 };
 
 const main = function(cmdArgs) {
-  tail(cmdArgs, fs, displayEndResult);
+  const {stdin} = process;
+  tail(cmdArgs, {fs, stdin}, displayEndResult);
 };
 main(process.argv);

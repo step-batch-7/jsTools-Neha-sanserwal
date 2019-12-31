@@ -40,9 +40,9 @@ cmd node tail.js -n wrongOffset goodFile.txt
 ========= todo for 0.4 =================
 node tail.js 
 // will wait for data
-test of stdin = appTest and unit test
-create a stdin reader.
-store the data to object
-end the stdin reader on 
-generate first 10 lines 
-display error and content
+--done-- test of stdin = appTest and unit test
+--done--create a stdin reader.
+--done-- generate first 10 lines 
+--done-- display error and content
+--done-- extract function
+* add tests for extracted Option.
