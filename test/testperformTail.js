@@ -2,12 +2,13 @@ const assert = require('chai').assert;
 const { tail } = require('../src/performTail');
 
 describe('tail', function() {
-  it('should give error if the options are not valid', function() {
+  it('should give error if the options are not valid', function(done) {
     const fs = {};
     let cmdArgs = ['node', 'tail.js', '-n', 'a'];
     let displayEndResult = function(endResult) {
       assert.strictEqual(endResult.err, 'tail: illegal offset -- a');
       assert.strictEqual(endResult.lines, '');
+      done();
     };
     assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
     cmdArgs = ['node', 'tail.js', '-a'];
@@ -20,12 +21,13 @@ describe('tail', function() {
     assert.deepStrictEqual(tail(cmdArgs, fs, displayEndResult));
   });
 
-  it('should give error if cannot find given file', function() {
+  it('should give error if cannot find given file', function(done) {
     const fs = {};
     const onCompletion = function(endResult) {
       const err = 'tail: bad: No such file or directory';
       assert.deepStrictEqual(endResult.err, err);
       assert.strictEqual(endResult.lines, '');
+      done();
     };
     fs.readFile =function(path, encoding, callback) {
       assert.strictEqual(path, 'bad');
