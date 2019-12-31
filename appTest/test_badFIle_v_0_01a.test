@@ -1,0 +1,2 @@
+(chmod -r appTest/goodFile.txt;node tail.js appTest/goodFile.txt;chmod +r appTest/goodFile.txt);
+tail: appTest/goodFile.txt: Permission denied
