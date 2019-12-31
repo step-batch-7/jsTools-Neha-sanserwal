@@ -60,6 +60,10 @@ const parseOptions = function(userArgs){
 module.exports = {
   parseOffset,
   parseN,
+  isACountOption,
+  isAOption,
+  isOffsetAttached,
+  isOffsetSeparate,
   parseOptions
 };
 

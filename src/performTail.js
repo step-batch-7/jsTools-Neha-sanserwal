@@ -18,6 +18,7 @@ const tail = function(cmdArgs, readers, onCompletion) {
     onCompletion({ err: tailOptions.err, lines: '' });
     return;
   }
+
   const path = tailOptions.filePath;
   const reader = pickAction(path, readers);
   reader.setEncoding('utf8');
@@ -25,7 +26,9 @@ const tail = function(cmdArgs, readers, onCompletion) {
   const onLoadingLines = function(loadedContent){
     if(loadedContent.err){
       onCompletion({err: loadedContent.err, lines: ''});
+      return;
     }
+
     const totalLines = loadedContent.totalLines.trim();
     const lines =generateTailLines(tailOptions.count, totalLines );
     onCompletion({err: '', lines: lines.join('\n')});

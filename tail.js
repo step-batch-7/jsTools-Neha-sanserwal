@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const { tail } = require('./src/performTail');
 
 const displayEndResult = function(endResult) {

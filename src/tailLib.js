@@ -12,6 +12,7 @@ const fileErrors = {
 
 const generateTailLines = function (count, lines) {
   const splittedLines = lines.split('\n');
+  
   if(count=== '+1'){
     return splittedLines;
   }
@@ -39,17 +40,6 @@ const loadTailLines = function(path, reader, onLoadingLines){
     onLoadingLines({totalLines: '', err: fileErrors[err.code](path)});
   });
 };
-
-// const onReadingContent = function (err, content) {
-//   if (err) {
-//     const error  = `${fileErrors[err.code](this.tailOptions.filePath)}`;
-//     this.onCompletion({ err: error, lines: '' });
-//     return;
-//   }
-
-//   const lines = generateTailLines(this.tailOptions.count, content.trim());
-//   this.onCompletion({ lines: lines.join('\n'), err: '' });
-// };
 
 const filterUserOptions = function (cmdArgs){
   const [, , ...userOptions] = cmdArgs;
