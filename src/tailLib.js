@@ -14,8 +14,8 @@ const generateTailLines = function (count, lines) {
   const splittedLines = lines.split('\n');
 
   if(count.startsWith('+')){
-    count = count-1;
-    const slicedLines = splittedLines.slice(count, lines.length);
+    const start = count-1;
+    const slicedLines = splittedLines.slice(start, lines.length);
     return slicedLines;
   }
 

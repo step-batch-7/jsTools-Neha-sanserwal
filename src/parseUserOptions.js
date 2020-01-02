@@ -1,14 +1,21 @@
 const validationErrors = {
   optionErr: function (option) {
     const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
-    return `tail: illegal option --${option}\nusage: ${usage}`;
+    return `tail: illegal option -- ${option}\nusage: ${usage}`;
   },
   offsetErr: function (offset) {
     return `tail: illegal offset -- ${offset}`;
+  },
+  usageErr: function(option) {
+    const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
+    return `tail: option requires an argument -- ${option}\nusage: ${usage}`;
   }
 };
 
 const parseOffset = function(num) {
+  if(!num){
+    return {err: validationErrors.usageErr('n'), count: ''};
+  }
   if (isNaN(parseInt(num))) {
     return { err: validationErrors.offsetErr(num), count: '' };
   }

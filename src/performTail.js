@@ -20,8 +20,7 @@ const tail = function(cmdArgs, readers, onCompletion) {
     return;
   }
 
-  const filePath = tailOptions.filePath;
-  const reader = pickReader(filePath, readers);
+  const reader = pickReader(tailOptions.filePath, readers);
   reader.setEncoding('utf8');
 
   const onLoadingLines = function(loadedContent){
@@ -33,8 +32,7 @@ const tail = function(cmdArgs, readers, onCompletion) {
     const lines =generateTailLines(tailOptions.count, totalLines );
     onCompletion({err: '', lines: lines.join('\n')});
   };
-
-  loadTailLines(filePath, reader, onLoadingLines);
+  loadTailLines(tailOptions.filePath, reader, onLoadingLines);
 };
 
 module.exports = {
