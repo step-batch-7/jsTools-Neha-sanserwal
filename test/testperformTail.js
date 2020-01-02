@@ -18,9 +18,18 @@ describe('pickReader', function(){
 });
 
 describe('tail', function() {
+  let stdin = {};
+  let fs = {};
+  let reader = {};
+  beforeEach(function(){
+    stdin = {};
+    fs = {};
+    reader= {setEncoding: sinon.fake(), on: sinon.fake() };
+  });
+  afterEach(function(){
+    sinon.restore();
+  });
   it('should give error if the options are not valid', function(done) {
-    const fs = {};
-    const stdin = {};
     let cmdArgs = ['node', 'tail.js', '-n', 'a'];
     let onCompletion = function(endResult) {
       assert.strictEqual(endResult.err, 'tail: illegal offset -- a');
@@ -38,9 +47,7 @@ describe('tail', function() {
     assert.deepStrictEqual(tail(cmdArgs, fs, stdin, onCompletion));
   });
 
-  it('should give error if cannot find given file', function(done) {
-    const stdin = {};
-    const reader= {setEncoding: sinon.fake(), on: sinon.fake() };   
+  it('should give error if cannot find given file', function(done) {  
     const createReadStream = function(filePath){
       assert.strictEqual(filePath, 'bad');
       return reader;
@@ -56,12 +63,10 @@ describe('tail', function() {
     assert.strictEqual(reader.on.firstCall.args[0], 'data');
     assert.strictEqual(reader.on.secondCall.args[0], 'end');
     assert.strictEqual(reader.on.callCount, 3);
-    reader.on.thirdCall.args[1]({code:'ENOENT'})
+    reader.on.thirdCall.args[1]({code: 'ENOENT'});
   });
 
   it('should generate tail lines of given file', function(done) {
-    const stdin = {};
-    const reader= {setEncoding: sinon.fake(), on: sinon.fake() };
     const createReadStream = function(filePath){
       assert.strictEqual(filePath, 'good');
       return reader;
@@ -83,8 +88,6 @@ describe('tail', function() {
   });
 
   it('should load the lines from stdin when file is not given', function(done) {
-    const fs = {};
-    const stdin = {setEncoding: sinon.fake(), on: sinon.fake() };
     const onCompletion = function(endResult) {
       assert.strictEqual(endResult.lines, 'abc');
       done();
