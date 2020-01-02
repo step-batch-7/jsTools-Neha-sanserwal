@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha",
-    "appTest": "./runAllTests.sh"
+    "appTest": "./runAllTests.sh",
+    "lint" : "eslint ./src/* ./test/*"
   },
   "repository": {
     "type": "git",
