@@ -23,15 +23,9 @@ describe('generateTailLines', function() {
     assert.deepStrictEqual(generateTailLines('3', lines), expected);
   });
 
-  it('should give total line of file content if tail count is +1', function() {
+  it('should start from line n-1 if the offset is positive', function() {
     const lines = '1\n2\n3\n4\n5';
-    const expected = ['1', '2', '3', '4', '5'];
-    assert.deepStrictEqual(generateTailLines('+1', lines), expected);
-  });
-
-  it('should chop first n lines if the count is positively signed', function() {
-    const lines = '1\n2\n3\n4\n5';
-    const expected = ['4', '5'];
+    const expected = ['3', '4', '5'];
     assert.deepStrictEqual(generateTailLines('+3', lines), expected);
   });
 
