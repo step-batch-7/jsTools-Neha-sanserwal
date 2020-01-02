@@ -1,6 +1,16 @@
+const validationErrors = {
+  optionErr: function (option) {
+    const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
+    return `tail: illegal option --${option}\nusage: ${usage}`;
+  },
+  offsetErr: function (offset) {
+    return `tail: illegal offset -- ${offset}`;
+  }
+};
+
 const parseOffset = function(num) {
   if (isNaN(parseInt(num))) {
-    return { err: `tail: illegal offset -- ${num}`, count: '' };
+    return { err: validationErrors.offsetErr(num), count: '' };
   }
   return { err: '', count: `${num}` };
 };
@@ -47,14 +57,11 @@ const parseOptions = function(userArgs){
   }
 
   if(!isACountOption(option)) {
-    const [, optErr]=option;
-    const usage = 'tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]';
-    const err = `tail: illegal option -- ${optErr}\nusage: ${usage}`;
+    const [, illegalOpt]=option;
+    const err = validationErrors.optionErr(illegalOpt);
     return {err, filePath: '', count: '' };
   }
-  
   return parseN(userArgs);
-
 };
 
 module.exports = {
@@ -66,4 +73,3 @@ module.exports = {
   isOffsetSeparate,
   parseOptions
 };
-
