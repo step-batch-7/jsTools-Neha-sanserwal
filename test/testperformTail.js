@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const sinon = require('sinon');
 const { tail, pickReader } = require('../src/performTail');
-
+/* eslint no-magic-numbers: 0 */
 describe('pickReader', function(){
   it('should not create readStream when file path is not present', function(){
     const filePath = undefined;
@@ -22,7 +22,7 @@ describe('tail', function() {
   let fs = {};
   let reader = {};
   beforeEach(function(){
-    stdin = {};
+    stdin = {setEncoding: sinon.fake(), on: sinon.fake() };
     fs = {};
     reader= {setEncoding: sinon.fake(), on: sinon.fake() };
   });
@@ -92,8 +92,12 @@ describe('tail', function() {
       assert.strictEqual(endResult.lines, 'abc');
       done();
     };
+    const createReadStream = function(filePath){
+      assert.strictEqual(filePath, undefined);
+    };
+    
     const cmdArgs = ['node', 'tail.js'];
-    tail(cmdArgs, {fs, stdin}, onCompletion);
+    tail(cmdArgs, {createReadStream, stdin}, onCompletion);
     assert(stdin.setEncoding.calledWith('utf8'));
     assert.strictEqual(stdin.on.firstCall.args[0], 'data');
     assert.strictEqual(stdin.on.secondCall.args[0], 'end');

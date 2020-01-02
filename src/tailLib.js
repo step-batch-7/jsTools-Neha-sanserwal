@@ -12,9 +12,8 @@ const fileErrors = {
 
 const generateTailLines = function (count, lines) {
   const splittedLines = lines.split('\n');
-
   if(count.startsWith('+')){
-    const start = count-1;
+    const start = --count;
     const slicedLines = splittedLines.slice(start, lines.length);
     return slicedLines;
   }
