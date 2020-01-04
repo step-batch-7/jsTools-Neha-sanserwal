@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const sinon = require('sinon');
 const {tail, pickReader} = require('../src/performTail');
-/* eslint no-magic-numbers: 0 */
+
 describe('pickReader', function(){
   it('should not create readStream when file path is not present', function(){
     const filePath = undefined;
