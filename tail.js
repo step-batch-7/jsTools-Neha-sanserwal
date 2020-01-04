@@ -1,5 +1,5 @@
 const {createReadStream} = require('fs');
-const { tail } = require('./src/performTail');
+const {tail} = require('./src/performTail');
 
 const displayEndResult = function(endResult) {
   process.stderr.write(endResult.err);

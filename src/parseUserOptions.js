@@ -17,9 +17,9 @@ const parseOffset = function(num) {
     return {err: validationErrors.usageErr('n'), count: ''};
   }
   if (isNaN(parseInt(num))) {
-    return { err: validationErrors.offsetErr(num), count: '' };
+    return {err: validationErrors.offsetErr(num), count: ''};
   }
-  return { err: '', count: `${num}` };
+  return {err: '', count: `${num}`};
 };
 
 const isOffsetAttached = function(option) {
@@ -36,12 +36,12 @@ const parseN = function(options) {
   const [option, offset, filePath] = options;
   if (isOffsetAttached(option)) {
     const [, , ...newOffset] = option;
-    return { ...parseOffset(newOffset.join('')), filePath: offset };
+    return {...parseOffset(newOffset.join('')), filePath: offset};
   }
   if (isOffsetSeparate(option)) {
-    return { ...parseOffset(offset), filePath };
+    return {...parseOffset(offset), filePath};
   }
-  return { ...parseOffset(option), filePath: offset };
+  return {...parseOffset(option), filePath: offset};
 };
 
 const isAOption = function(arg) {
@@ -49,12 +49,12 @@ const isAOption = function(arg) {
     return false;
   }
   const count = parseInt(arg);
-  return arg.startsWith('-')||arg.startsWith('+') || Number.isInteger(count);
+  return arg.startsWith('-') || arg.startsWith('+') || Number.isInteger(count);
 };
 
 const isACountOption = function(arg){
   const count = parseInt(arg);
-  return arg.startsWith('-n') || Number.isInteger(count) ;
+  return arg.startsWith('-n') || Number.isInteger(count);
 };
 
 const parseOptions = function(userArgs){
@@ -64,9 +64,9 @@ const parseOptions = function(userArgs){
   }
 
   if(!isACountOption(option)) {
-    const [, illegalOpt]=option;
+    const [, illegalOpt] = option;
     const err = validationErrors.optionErr(illegalOpt);
-    return {err, filePath: '', count: '' };
+    return {err, filePath: '', count: ''};
   }
   return parseN(userArgs);
 };

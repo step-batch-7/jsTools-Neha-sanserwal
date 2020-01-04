@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 const sinon = require('sinon');
-const { tail, pickReader } = require('../src/performTail');
+const {tail, pickReader} = require('../src/performTail');
 /* eslint no-magic-numbers: 0 */
 describe('pickReader', function(){
   it('should not create readStream when file path is not present', function(){
@@ -11,7 +11,7 @@ describe('pickReader', function(){
   });
   it('should create readStream when file path is present', function(){
     const filePath = 'a';
-    const readers = { createReadStream: sinon.fake(), stdin: {}};
+    const readers = {createReadStream: sinon.fake(), stdin: {}};
     pickReader(filePath, readers);
     assert(readers.createReadStream.calledOnce);
   });
@@ -22,9 +22,9 @@ describe('tail', function() {
   let fs = {};
   let reader = {};
   beforeEach(function(){
-    stdin = {setEncoding: sinon.fake(), on: sinon.fake() };
+    stdin = {setEncoding: sinon.fake(), on: sinon.fake()};
     fs = {};
-    reader= {setEncoding: sinon.fake(), on: sinon.fake() };
+    reader = {setEncoding: sinon.fake(), on: sinon.fake()};
   });
   afterEach(function(){
     sinon.restore();

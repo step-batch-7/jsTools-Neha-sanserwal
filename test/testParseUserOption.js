@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const { parseOffset, 
+const {parseOffset, 
   isOffsetAttached,
   isOffsetSeparate,
   parseN, 
@@ -15,7 +15,7 @@ describe('parseOffset', function() {
     });
   });
   it('should give the parsed number if number is valid', function() {
-    assert.deepStrictEqual(parseOffset('1'), { err: '', count: '1' });
+    assert.deepStrictEqual(parseOffset('1'), {err: '', count: '1'});
   });
 });
 
@@ -50,7 +50,7 @@ describe('isOffsetAttached', function(){
 
 describe('parseN', function() {
   it('should set count if option is combined with offset', function() {
-    const expected = { err: '', count: '1', filePath: 'ab'};
+    const expected = {err: '', count: '1', filePath: 'ab'};
     assert.deepStrictEqual(parseN(['-n1', 'ab']), expected);
   });
 
@@ -63,7 +63,7 @@ describe('parseN', function() {
   });
 
   it('should set count if option is separated from offset', function() {
-    const expected = { err: '', count: '1', filePath: 'a'};
+    const expected = {err: '', count: '1', filePath: 'a'};
     assert.deepStrictEqual(parseN(['-n', '1', 'a']), expected);
   });
 
@@ -76,7 +76,7 @@ describe('parseN', function() {
   });
 
   it('should set count if option is given as offset', function() {
-    const expected = { err: '', count: '-1', filePath: 'abc'};
+    const expected = {err: '', count: '-1', filePath: 'abc'};
     assert.deepStrictEqual(parseN(['-1', 'abc']), expected);
   });
 });

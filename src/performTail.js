@@ -1,8 +1,8 @@
 'use strict';
-const { loadTailLines,
+const {loadTailLines,
   generateTailLines,
   filterUserOptions} = require('./tailLib');
-const { parseOptions } = require('./parseUserOptions.js');
+const {parseOptions} = require('./parseUserOptions.js');
 
 const pickReader = function(filePath, readers){
   if(filePath){
@@ -16,7 +16,7 @@ const tail = function(cmdArgs, readers, onCompletion) {
   const tailOptions = parseOptions(userArgs);
 
   if (tailOptions.err) {
-    onCompletion({ err: tailOptions.err, lines: '' });
+    onCompletion({err: tailOptions.err, lines: ''});
     return;
   }
 
@@ -29,7 +29,7 @@ const tail = function(cmdArgs, readers, onCompletion) {
       return;
     }
     const totalLines = loadedContent.totalLines.trim();
-    const lines =generateTailLines(tailOptions.count, totalLines );
+    const lines = generateTailLines(tailOptions.count, totalLines );
     onCompletion({err: '', lines: lines.join('\n')});
   };
   loadTailLines(tailOptions.filePath, reader, onLoadingLines);
