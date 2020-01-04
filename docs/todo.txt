@@ -45,4 +45,11 @@ node tail.js
 --done-- generate first 10 lines 
 --done-- display error and content
 --done-- extract function
-* add tests for extracted Option.
+--done-- add tests for extracted Option.
+
+//// todo for class extraction 
+create a file tailOptions for class tailOptions
+create class Tail option
+create the getter
+    linesCount
+    file
