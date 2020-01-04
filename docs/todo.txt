@@ -47,9 +47,15 @@ node tail.js
 --done-- extract function
 --done-- add tests for extracted Option.
 
-//// todo for class extraction 
-create a file tailOptions for class tailOptions
-create class Tail option
-create the getter
+//// class extraction 
+--done-- create a file tailOptions for class tailOptions
+--done-- create class Tail option
+--done--create the getter
     linesCount
     file
+//// inject the class in perform tail
+    use the instance in parsing to update the line and file 
+                 or 
+    update the instance after parsing 
+    change the loadFile function
+    change generateTailLines
