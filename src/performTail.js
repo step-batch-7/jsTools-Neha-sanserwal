@@ -3,6 +3,7 @@ const {loadTailLines,
   generateTailLines,
   filterUserOptions} = require('./tailLib');
 const {parseOptions} = require('./parseUserOptions.js');
+const {tailOptions} = require('./taliOptions');
 
 const pickReader = function(filePath, readers){
   if(filePath){
@@ -13,14 +14,13 @@ const pickReader = function(filePath, readers){
 
 const tail = function(cmdArgs, readers, onCompletion) {
   const userArgs = filterUserOptions(cmdArgs);
-  const tailOptions = parseOptions(userArgs);
-
-  if (tailOptions.err) {
-    onCompletion({err: tailOptions.err, lines: ''});
+  const parsedOptions = parseOptions(userArgs);
+  if (parsedOptions.err) {
+    onCompletion({err: parsedOptions.err, lines: ''});
     return;
   }
-
-  const reader = pickReader(tailOptions.filePath, readers);
+  const tailOpt = new tailOptions(parsedOptions);
+  const reader = pickReader(tailOpt.filePath, readers);
   reader.setEncoding('utf8');
 
   const onLoadingLines = function(loadedContent){
@@ -29,10 +29,10 @@ const tail = function(cmdArgs, readers, onCompletion) {
       return;
     }
     const totalLines = loadedContent.totalLines.trim();
-    const lines = generateTailLines(tailOptions.count, totalLines );
+    const lines = generateTailLines(tailOpt.lineCount, totalLines );
     onCompletion({err: '', lines: lines.join('\n')});
   };
-  loadTailLines(tailOptions.filePath, reader, onLoadingLines);
+  loadTailLines(tailOpt.filePath, reader, onLoadingLines);
 };
 
 module.exports = {
