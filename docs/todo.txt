@@ -54,8 +54,13 @@ node tail.js
     linesCount
     file
 //// inject the class in perform tail
-    use the instance in parsing to update the line and file 
+--done-- use the instance in parsing to update the line and file 
                  or 
     update the instance after parsing 
-    change the loadFile function
-    change generateTailLines
+--done-- change the loadFile function
+--done-- change generateTailLines
+
+//// readStream
+
+extract loadFile function to readStream 
+remove binding through adding class in function loadFile
