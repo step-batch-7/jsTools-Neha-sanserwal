@@ -1,0 +1,3 @@
+(cat appTest/goodFile.txt|node tail.js -n)
+tail: option requires an argument -- n
+usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]

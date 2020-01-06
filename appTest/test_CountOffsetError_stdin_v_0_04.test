@@ -1,0 +1,2 @@
+(cat appTest/goodFile.txt|node tail.js -n q)
+tail: illegal offset -- q
