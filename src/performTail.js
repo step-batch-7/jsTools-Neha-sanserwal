@@ -1,9 +1,8 @@
 'use strict';
-const {loadTailLines,
-  generateTailLines,
-  filterUserOptions} = require('./tailLib');
+const {generateTailLines, filterUserOptions} = require('./tailLib');
 const {parseOptions} = require('./parseUserOptions.js');
 const {tailOptions} = require('./taliOptions');
+const {loadTailLines} = require('./readStream.js');
 
 const pickReader = function(filePath, readers){
   if(filePath){
