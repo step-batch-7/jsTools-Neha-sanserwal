@@ -59,8 +59,7 @@ node tail.js
     update the instance after parsing 
 --done-- change the loadFile function
 --done-- change generateTailLines
-
-//// readStream
-
-extract loadFile function to readStream 
-remove binding through adding class in function loadFile
+--done--extract loadFile function to readStream 
+--done-- extract a class cmdLineTool
+* fix bugs in the class 
+* need to remove binding this to the callback in class cmdLineTool
